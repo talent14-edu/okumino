@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Okumino – Pinokyo kitaptan kaçtı</title>
+<meta name="description" content="Okumino'da her kitap bir patika. Pinokyo'nun peşine düş, altı durakta Okumino'yu kendin dene.">
+<link rel="icon" href="img/okumino_ikon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600;1,9..144,800&family=Caveat:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+
+<header class="nav">
+  <a href="#" class="brand"><img src="img/okumino_logo.webp" alt="Okumino"></a>
+  <nav class="links">
+    <a href="#d1">Peşine düş</a>
+    <a href="#kulis">Okullar için</a>
+    <a href="#sss">SSS</a>
+  </nav>
+  <a href="#demo" class="btn btn-sm">Demo iste</a>
+</header>
+
+<!-- the patika: progress along six stops, back to the book -->
+<nav class="trail" aria-label="Patika">
+  <ol>
+    <li data-for="d1"><a href="#d1"><span>1</span><em>Tahmin et</em></a></li>
+    <li data-for="d2"><a href="#d2"><span>2</span><em>Dinle</em></a></li>
+    <li data-for="d3"><a href="#d3"><span>3</span><em>Kelime oyunu</em></a></li>
+    <li data-for="d4"><a href="#d4"><span>4</span><em>Sesli oku</em></a></li>
+    <li data-for="d5"><a href="#d5"><span>5</span><em>İzle</em></a></li>
+    <li data-for="d6"><a href="#d6"><span>6</span><em>Anla</em></a></li>
+    <li data-for="son" class="book-node"><a href="#son"><span>✦</span><em>Kitaba dönüş</em></a></li>
+  </ol>
+</nav>
+
+<!-- HERO: he jumps out of the page -->
+<section class="hero" id="ust">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Bir kahraman<br><em>kitaptan kaçtı.</em></h1>
+      <p class="lead">Onu geri getirmenin tek yolu, kitabı okumak. Okumino'da her kitap bir patika: sevilen eserler de, Okumino'ya özel özgün hikâyeler de. Çocuk dinler, okur, oynar, izler ve durak durak ilerleyip kitabı bitirir.</p>
+      <p class="lead small-lead">Aşağı in, Pinokyo'nun peşine düş. Altı durakta Okumino'yu kendin dene.</p>
+      <div class="cta-row">
+        <a href="#d1" class="btn">Peşine düş ↓</a>
+        <a href="#demo" class="btn btn-ghost">Okulum için demo iste</a>
+      </div>
+    </div>
+    <div class="book-scene">
+      <div class="book" id="heroBook">
+        <div class="page pl"><p class="chap">Birinci bölüm</p><p class="ptitle">Konuşan Odun</p><span class="lines"></span></div>
+        <div class="page pr">
+          <div class="frame">
+            <img class="pino ghost" src="img/pino_ayakta.webp" alt="">
+            <img class="pino hero-pino" src="img/pino_ayakta.webp" alt="Pinokyo">
+          </div>
+          <span class="lines short"></span>
+        </div>
+      </div>
+      <p class="note n-hole">az önce buradaydı!</p>
+      <img class="detective" src="img/mino_dedektif.webp" alt="Tilki Mino büyüteçle iz sürüyor">
+    </div>
+  </div>
+</section>
+
+<!-- DURAK 1: guess the door -->
+<section class="durak" id="d1">
+  <div class="wrap">
+    <header class="dh"><span class="dn">1. durak</span><span class="dk">Okuma öncesi · Tahmin et</span></header>
+    <h2>Hangi kapının arkasında?</h2>
+    <p class="lead">Okumaya başlamadan önce çocuk başlığa ve resme bakıp tahmin yürütür. İpucu: içeriden davul sesi ve alkış geliyor.</p>
+    <div class="doors">
+      <button class="door" data-ok="0"><span class="dsign">Gepetto'nun Atölyesi</span><span class="dleaf"></span><span class="inside"><svg viewBox="0 0 80 60"><path d="M10 50 L70 50 M18 50 L18 30 L62 30 L62 50 M24 30 L30 16 L40 16" fill="none" stroke="#2B1B17" stroke-width="3" stroke-linecap="round"/><circle cx="52" cy="20" r="3" fill="#C98A4B"/><circle cx="58" cy="24" r="2" fill="#C98A4B"/></svg><i>sadece talaş…</i></span></button>
+      <button class="door" data-ok="1"><span class="dsign">Kukla Tiyatrosu</span><span class="dleaf"></span><span class="inside"><img class="pino in-door" src="img/pino_ayakta.webp" alt="Pinokyo"><i>buldun!</i></span></button>
+      <button class="door" data-ok="0"><span class="dsign">Kırmızı Istakoz Hanı</span><span class="dleaf"></span><span class="inside"><svg viewBox="0 0 80 60"><ellipse cx="40" cy="42" rx="28" ry="8" fill="#FBF1E1" stroke="#2B1B17" stroke-width="3"/><path d="M30 38 Q40 30 50 38" fill="none" stroke="#2B1B17" stroke-width="2"/></svg><i>boş tabak…</i></span></button>
+    </div>
+    <p class="feedback" id="f1" aria-live="polite">Bir kapı seç.</p>
+  </div>
+</section>
+
+<!-- DURAK 2: listen -->
+<section class="durak alt" id="d2">
+  <div class="wrap">
+    <header class="dh"><span class="dn">2. durak</span><span class="dk">Okuma sırası · Dinle</span></header>
+    <h2>Kelime kelime dinle.</h2>
+    <p class="lead">Seslendirme okurken her kelime sırayla yanar. Çocuk model okumayı gözüyle takip eder, Pinokyo da kelimelerin üstünden zıplar.</p>
+    <div class="listen">
+      <div class="hop-lane"><img class="pino hopper" id="hopper" src="img/pino_zipliyor.webp" alt=""></div>
+      <p class="say" id="say">Yaşlı Gepetto tezgâhına oturdu, eline bir kütük aldı ve gülümsedi: “Senden öyle bir kukla yapacağım ki dans edecek, takla atacak!”</p>
+      <button class="btn play" id="play">▶ Dinle</button>
+    </div>
+  </div>
+</section>
+
+<!-- DURAK 3: word bridge -->
+<section class="durak" id="d3">
+  <div class="wrap">
+    <header class="dh"><span class="dn">3. durak</span><span class="dk">Okuma sırası · Kelime oyunu</span></header>
+    <h2>Köprüyü kelimeyle kur.</h2>
+    <p class="lead">Kelime oyunları eserin kendi kelimeleriyle yapılır. Doğru kelime yerine oturunca köprü tamamlanır.</p>
+    <p class="gap-sentence">Gepetto eline bir <span class="blank" id="blank">?</span> aldı.</p>
+    <div class="tiles">
+      <button class="tile" data-w="KAŞIK">KAŞIK</button>
+      <button class="tile" data-w="KÜTÜK">KÜTÜK</button>
+      <button class="tile" data-w="KAYIK">KAYIK</button>
+    </div>
+    <div class="river" id="river">
+      <div class="bank l"></div><div class="bank r"></div>
+      <div class="planks"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="water"></div>
+      <img class="pino crosser" src="img/pino_ayakta.webp" alt="Pinokyo">
+    </div>
+    <p class="feedback" id="f3" aria-live="polite">Hangi kelime?</p>
+  </div>
+</section>
+
+<!-- DURAK 4: read aloud -->
+<section class="durak alt" id="d4">
+  <div class="wrap read-grid">
+    <div>
+      <header class="dh"><span class="dn">4. durak</span><span class="dk">Okuma sırası · Sesli oku</span></header>
+      <h2>Sesli oku, rekorunu kır.</h2>
+      <p class="lead">Çocuk aynı bölümü bu kez kendi sesiyle okur. Okumino dakikadaki doğru kelimeyi ölçer. Puan hız için değil, doğru okuma için verilir.</p>
+      <p class="small">Ses kayıtları yalnızca puanı hesaplamak için kullanılır ve puanlamadan sonra silinir.</p>
+    </div>
+    <div class="meter-card">
+      <p class="mini-text" id="readText">Gepetto kütüğü yonttu. Önce saçlar çıktı, sonra alın, sonra gözler. Gözler biter bitmez kıpırdadı ve ona baktı.</p>
+      <div class="gauge"><svg viewBox="0 0 200 110"><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#F0DFC8" stroke-width="18" stroke-linecap="round"/><path id="arc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#E24A2B" stroke-width="18" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/></svg>
+        <p class="wpm"><b id="wpm">0</b><span>kelime/dk</span></p></div>
+      <p class="rec">Önceki rekor: <b>46</b></p>
+      <button class="btn" id="readBtn">🎙 Deneme okumasını izle</button>
+      <p class="badge-pop" id="recPop">Rekor kırdın! +25 puan</p>
+      <p class="tiny">Bu bir canlandırma; mikrofonun açılmaz.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DURAK 5: watch -->
+<section class="durak" id="d5">
+  <div class="wrap">
+    <header class="dh"><span class="dn">5. durak</span><span class="dk">Okuma sırası · İzle</span></header>
+    <h2>Kilit sahne perdede.</h2>
+    <p class="lead">Her durakta hikâyenin dönüm noktası kısa bir animasyonla canlanır.</p>
+    <div class="theater" id="theater">
+      <div class="proscenium"></div>
+      <div class="stage-floor"></div>
+      <div class="puppets">
+        <img class="pino dancer" src="img/pino_zipliyor.webp" alt="Pinokyo sahnede">
+      </div>
+      <div class="curtain cl"></div><div class="curtain cr"></div>
+      <p class="caption">Pinokyo sahneye fırlıyor. Bütün kuklalar onu tanıyor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DURAK 6: true or lie -->
+<section class="durak alt" id="d6">
+  <div class="wrap lie-grid">
+    <div>
+      <header class="dh"><span class="dn">6. durak</span><span class="dk">Okuma sonrası · Anla ve üret</span></header>
+      <h2>Doğru mu, yalan mı?<br><em>Burnuna bak.</em></h2>
+      <p class="lead">Anlama soruları üç türlü: gözlemci, dedektif ve düşünür. Sonunda çocuk hikâyenin sonunu kendi yazar. Burada sıra sende: Pinokyo'ya Okumino hakkında bir cümle söylet. Yalansa burnu uzar.</p>
+      <div class="claims">
+        <button class="claim" data-lie="1" data-why="Okumino'da alıştırma hikâyenin içindedir: kelime oyunu Pinokyo'nun kelimeleriyle oynanır.">“Kitap bir yerde, alıştırma başka yerde.”</button>
+        <button class="claim" data-lie="0" data-why="Her eser Minik (1–2), Kâşif (3–5) ve Usta (6–8) sürümünde hazırlanır.">“Her eser üç sürümde hazırlanır.”</button>
+        <button class="claim" data-lie="1" data-why="Ses kayıtları puanlamadan sonra silinir, kayıt için veli onayı alınır.">“Ses kayıtları sonsuza dek saklanır.”</button>
+        <button class="claim" data-lie="0" data-why="Final aşamasını geçen çocuk QR kodla doğrulanabilen okuma belgesini alır.">“Kitabı bitiren okuma belgesi kazanır.”</button>
+        <button class="claim" data-lie="1" data-why="Kısa duraklar ve görünür ilerleme var. Hedef, başlanan her kitabın bitirilmesi.">“Çocuklar kitabı yarıda bırakır.”</button>
+      </div>
+    </div>
+    <div class="liar">
+      <div class="liar-pino" id="liar"><canvas id="liarCanvas" aria-label="Pinokyo, üç boyutlu"></canvas><img class="pino p-true" src="img/pino_ayakta.webp" alt="Pinokyo"><img class="pino p-lie" src="img/pino_uzunburun.webp" alt=""></div>
+      <p class="bubble" id="bubble">Bir cümle seç, ben söyleyeyim.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BACK TO THE BOOK -->
+<section class="final" id="son">
+  <div class="wrap final-grid">
+    <div class="book-scene small" id="endScene">
+      <div class="book closed-ready">
+        <div class="page pl"><p class="chap">Son bölüm</p><p class="ptitle">Gerçek Bir Çocuk</p><span class="lines"></span></div>
+        <div class="page pr"><div class="frame"><img class="pino ghost" src="img/pino_ayakta.webp" alt=""><img class="pino home-pino" src="img/pino_kosuyor.webp" alt="Pinokyo kitabına dönüyor"></div><span class="lines short"></span></div>
+      </div>
+    </div>
+    <div>
+      <h2>Kukla gerçek çocuk oldu.<br><em>Çocuk da gerçek bir okur.</em></h2>
+      <p class="lead">Altı durak, bir eser, tek patika. Final aşamasını geçen çocuk adının yazdığı okuma belgesini alır; bitirdiği her kitap Okuma Pasaportu'na bir damga olarak eklenir.</p>
+      <div class="badges"><span>Rekor Kıran</span><span>Süper Dedektif</span><span>Kitap Kurdu</span></div>
+      <label class="name-in"><span>Adını yaz, belgen hazırlansın</span><input id="nameIn" maxlength="28" placeholder="Öğrencinin adı" autocomplete="off"></label>
+    </div>
+  </div>
+  <div class="wrap cert-wrap">
+    <img class="cheer" src="img/mino_sevinc.webp" alt="">
+    <div class="cert">
+      <div class="cert-top"><img src="img/okumino_logo.webp" alt=""><span>Okuma Belgesi</span></div>
+      <p class="cert-name" id="certName">Öğrencinin adı</p>
+      <p class="cert-body"><b>Pinokyo</b> (Kâşif sürümü) eserini okuyup tüm durakları başarıyla tamamladı.</p>
+      <div class="cert-foot"><span><b>8</b> durak</span><span><b>48</b> adım</span><svg class="qr" id="qr" viewBox="0 0 21 21" aria-label="QR doğrulama"></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKSTAGE: teachers and families -->
+<section class="kulis" id="kulis">
+  <div class="wrap">
+    <h2 class="center">Sahne çocuğun,<br><em>kulis öğretmenin.</em></h2>
+    <p class="lead center narrow">Çocuk yalnızca hikâyeyi görür. Arka planda her adım Türkçe öğretim programı kazanımlarıyla eşleşir; öğretmen sınıfın akıcılık, kelime ve anlama gelişimini tek ekranda izler.</p>
+    <div class="levels">
+      <div class="lv"><b>Minik</b><span>1–2. sınıf · 6 durak</span><p>Dinleme ve resim ağırlıklı, kısa metinler.</p></div>
+      <div class="lv"><b>Kâşif</b><span>3–5. sınıf · 8 durak</span><p>Sadeleşmiş metin, sesli okuma ve akıcılık.</p></div>
+      <div class="lv"><b>Usta</b><span>6–8. sınıf · 10 durak</span><p>Asıl metne yakın; çıkarım ve yazma.</p></div>
+    </div>
+    <div class="backstage">
+      <figure class="photo"><img src="img/sinif.webp" alt="Sınıfta tablette okuyan iki öğrenci ve öğretmenleri"></figure>
+      <div class="lists">
+        <div class="list"><h3>Öğretmen</h3><ul><li>Sınıfa patika atar, haftalık okuma hedefi koyar.</li><li>Sesli okumadan akıcılığı otomatik ölçer.</li><li>Bulma, çıkarım ve yorum sorularına göre beceri raporu alır.</li><li>Desteğe ihtiyaç duyan öğrenciyi erken görür.</li></ul></div>
+        <div class="list fam"><h3>Aile</h3><ul><li>Haftalık gelişim özeti.</li><li>Paylaşılabilir okuma belgeleri.</li><li>Evde birlikte okuma önerileri.</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" id="demo">
+  <div class="wrap demo-grid">
+    <div>
+      <h2>Patikaları birlikte<br><em>gezelim.</em></h2>
+      <p class="lead">30 dakikalık canlı demoda sınıflarınız için deneme hesaplarını açalım. Dönem başı ve sonu akıcılık ölçümüyle gelişimi birlikte görelim.</p>
+    </div>
+    <form class="form" id="form">
+      <label>Ad soyad<input required name="ad"></label>
+      <label>Göreviniz<select name="gorev"><option>Okul yöneticisi</option><option>Türkçe / sınıf öğretmeni</option><option>Veli</option><option>Diğer</option></select></label>
+      <div class="two"><label>Okul adı<input name="okul"></label><label>Öğrenci sayısı<input name="sayi" inputmode="numeric"></label></div>
+      <div class="two"><label>E-posta<input type="email" required name="eposta"></label><label>Telefon<input type="tel" name="tel"></label></div>
+      <label class="chk"><input type="checkbox" required> Kişisel verilerimin demo talebim için işlenmesine ilişkin aydınlatma metnini okudum.</label>
+      <button class="btn" type="submit">Demo talep et</button>
+      <p class="ok" hidden>Teşekkürler! Ekibimiz en kısa sürede sizinle iletişime geçecek.</p>
+    </form>
+  </div>
+  <div class="wrap faq" id="sss">
+    <h2 class="center">Merak edilenler</h2>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div><img src="img/okumino_logo.webp" alt="Okumino" class="foot-logo"><p>Kitapları oynayarak bitiren çocuklar için Türkçe okuma patikaları.</p></div>
+    <div><b>Ürün</b><a href="#d1">Patika</a><a href="#kulis">Sürümler</a><a href="#son">Okuma belgesi</a></div>
+    <div><b>Kimler için</b><a href="#kulis">Okullar</a><a href="#kulis">Aileler</a></div>
+    <div><b>İletişim</b><span>[E-POSTA ADRESİ]</span><span>[TELEFON]</span><a href="#">KVKK aydınlatma metni</a></div>
+  </div>
+  <p class="copy">© 2026 Okumino. Tüm hakları saklıdır.</p>
+</footer>
+
+<script src="app.js"></script>
+<script src="pino3d/pino.js"></script>
+<script type="module">
+/* live 3D Pinokyo for the true-or-lie stop: the nose grows on a spring */
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const box = document.getElementById('liar'), canvas = document.getElementById('liarCanvas');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+try {
+  const { createPino, createStage } = window.Pino;
+  const size = () => [box.clientWidth, box.clientHeight];
+  let [w, h] = size();
+  const st = createStage(THREE, RoomEnvironment, canvas, { w, h, fov: 26 });
+  st.renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); st.renderer.setSize(w, h, false);
+  const p = createPino(THREE); st.scene.add(p.root);
+  const fit = () => { p.setPose('uzunburun'); st.frame(p.root, .98); };
+  fit();
+  let lying = false, nose = .34, vel = 0, t0 = performance.now(), blinkAt = 2000, visible = true;
+  const apply = () => p.setPose(lying ? 'uzunburun' : 'ayakta');
+  apply();
+  p.root.rotation.y = .9;
+  new MutationObserver(() => {
+    const now = box.classList.contains('lying');
+    if (now !== lying || box.classList.contains('boing')) { lying = now; apply(); p.root.rotation.y = .9; vel += lying ? 0 : -1.5; }
+  }).observe(box, { attributes: true, attributeFilter: ['class'] });
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(box);
+  addEventListener('resize', () => { [w, h] = size(); st.camera.aspect = w / h; st.camera.updateProjectionMatrix(); st.renderer.setSize(w, h, false); const keep = lying; lying = true; fit(); lying = keep; apply(); p.root.rotation.y = .9; });
+  box.classList.add('live');
+  const tick = now => {
+    requestAnimationFrame(tick);
+    if (!visible) return;
+    const t = (now - t0) / 1000;
+    const target = lying ? 2.3 : .34;
+    if (reduce) nose = target; else { vel += (target - nose) * .09; vel *= .82; nose += vel; }
+    p.parts.nose.scale.z = Math.max(.2, nose);
+    if (!reduce) {
+      p.parts.body.position.y = Math.abs(Math.sin(t * 2.2)) * .03;
+      p.root.rotation.z = Math.sin(t * 1.1) * .03;
+      p.parts.head.rotation.z = (lying ? -.08 : .06) + Math.sin(t * 1.3) * .05;
+      const b = (now % 4200) < 140 ? .12 : 1;
+      p.parts.eyes.forEach(e => { e.scale.y = (lying ? 1.18 : 1) * b; });
+      if (!lying) p.parts.elbowR.rotation.z = -.75 + Math.sin(t * 6) * .25;
+    }
+    st.render();
+  };
+  requestAnimationFrame(tick);
+} catch (e) { console.warn('3D Pinokyo unavailable, using images', e); }
+</script>
+
+</body>
+</html>
