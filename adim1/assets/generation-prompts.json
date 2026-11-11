@@ -1,0 +1,31 @@
+{
+  "tool": "Built-in Codex image_gen",
+  "style": "Mat guaj ve kuru kalem, sıcak çocuk kitabı çizimi",
+  "assets": [
+    "workshop.webp",
+    "eyes.webp",
+    "mino.webp",
+    "wig.webp"
+  ],
+  "reuse": {
+    "laugh.webp": "eyes.webp ile aynı atölye çizimi; kahkaha balonu HTML/CSS ile gösterilir"
+  },
+  "prompts": [
+    {
+      "id": "workshop",
+      "prompt": "Use case: illustration-story. Asset: one landscape 4:3 illustration for a quiet, beautifully designed Turkish children's reading activity about Pinocchio, ages 8–10. Visual direction: genuinely traditional children's picture book illustration, matte gouache on warm ivory paper with fine colored pencil and confident imperfect ink lines, restrained shapes, thoughtful negative space, muted sage green, ochre, terracotta and dusty blue. Charming but NOT preschool babyish. NO glossy 3D, NO big shiny cartoon eyes, NO cinematic lighting, NO magical glowing sparkles, NO digital gradients, NO lettering, NO watermark or UI. Consistent characters: Geppetto is a kind elderly Italian carpenter, small round spectacles, fluffy grey hair, grey moustache, sage-green apron over a faded blue shirt, rust trousers. Pinocchio is a SMALL recognizably wooden puppet, jointed limbs and visible warm wood grain, a modest long nose, simple little black eyes, cream shirt, muted brick-red waistcoat, navy shorts and a soft yellow cap with a small blue feather. Warm modest daylight in a cozy carpenter workshop with a wood workbench, cream plaster wall, simple window and a few tools; keep details selective and uncluttered.Scene: the moment before the puppet is made. Geppetto sits at his workbench thoughtfully looking at a plain small piece of wood, with a wooden spoon, a small wooden birdhouse and a little toy boat nearby as possible things he might make. A few curling wood shavings on the table. No Pinocchio puppet yet. A welcoming introductory picture. Storybook composition, not a catalog of items."
+    },
+    {
+      "id": "eyes",
+      "prompt": "Use case: illustration-story. Asset: one landscape 4:3 illustration for a quiet, beautifully designed Turkish children's reading activity about Pinocchio, ages 8–10. Visual direction: genuinely traditional children's picture book illustration, matte gouache on warm ivory paper with fine colored pencil and confident imperfect ink lines, restrained shapes, thoughtful negative space, muted sage green, ochre, terracotta and dusty blue. Charming but NOT preschool babyish. NO glossy 3D, NO big shiny cartoon eyes, NO cinematic lighting, NO magical glowing sparkles, NO digital gradients, NO lettering, NO watermark or UI. Consistent characters: Geppetto is a kind elderly Italian carpenter, small round spectacles, fluffy grey hair, grey moustache, sage-green apron over a faded blue shirt, rust trousers. Pinocchio is a SMALL recognizably wooden puppet, jointed limbs and visible warm wood grain, a modest long nose, simple little black eyes, cream shirt, muted brick-red waistcoat, navy shorts and a soft yellow cap with a small blue feather. Warm modest daylight in a cozy carpenter workshop with a wood workbench, cream plaster wall, simple window and a few tools; keep details selective and uncluttered.Scene one: Geppetto has carved the head and eyes of the small wooden Pinocchio puppet on his workbench. The puppet's eyes glance sideways toward him; Geppetto gently tilts his head with a puzzled smile. The puppet sits on the bench, hands and feet still roughly shaped. Focus on this quiet funny first sign of life, with just a few wood shavings. Medium shot."
+    },
+    {
+      "id": "mino",
+      "prompt": "Reinterpret this existing orange fox mascot as a traditional gouache and colored-pencil picture-book character on transparent background. Keep his yellow pom-pom hat, round glasses, blue hoodie, white sneakers and cream-tipped tail. He sits cross-legged with an open small book, smiling gently. Simple charming small eyes, matte paper-like paint and natural ink outlines, muted warm colors; whole body visible, calm friendly expression, generous empty space. No glossy 3D treatment, no huge shiny eyes, no text or logos. Preserve the recognizable mascot clothing and identity; change the medium to traditional illustrated picture book."
+    },
+    {
+      "id": "wig",
+      "prompt": "A charming traditional children's book still-life illustration on warm ivory paper, landscape 4:3. On a rustic carpenter's table, an elderly person's fluffy grey curly hairpiece has been playfully placed on top of a little yellow cloth cap with a blue feather. The hairpiece is the clear focus, instantly understandable, with a few wood shavings and a folded green apron in the background. No people in this illustration. A gentle humorous object arrangement about a borrowed wig, painted with matte gouache, soft colored pencil and natural ink lines, muted terracotta, ochre, sage and faded blue, traditional printed storybook aesthetic. No typography, logos, 3D rendering or glows."
+    }
+  ]
+}
