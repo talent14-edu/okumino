@@ -248,6 +248,9 @@ section[id],#kitaplik{scroll-margin-top:88px}
 .brand img{height:49px}
 .links{gap:30px}.links a{font-size:14px}
 .nav>.btn{border-radius:14px;min-height:40px;font-size:13px;box-shadow:0 3px 0 var(--coral-d)}
+.nav{transition:background-color .2s,border-color .2s}
+.nav.scrolled{background:transparent;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.nav.over-dark .links a{color:#fff5ea}
 .reading-hero{padding:34px 0 64px;background:radial-gradient(ellipse at 50% 45%,#fffdf5 0%,#fff5ea 68%);min-height:650px;overflow:hidden}
 .reading-wrap{max-width:1180px}
 .reading-heading{text-align:center;position:relative;z-index:1}
@@ -312,3 +315,16 @@ section[id],#kitaplik{scroll-margin-top:88px}
   .reading-selection>.btn{font-size:11px;padding:0 14px;min-height:43px;gap:10px;border-radius:12px}
 }
 @media(prefers-reduced-motion:reduce){.rack-book,.rack-model{transition:none!important}.rack-book:hover:not([aria-pressed=true]) .rack-model{transform:translateX(-50%) rotateY(90deg)}}
+
+/* Each level shows different titles, with one selected book continuing the journey. */
+.level-shelf{grid-template-columns:repeat(var(--book-count,3),minmax(0,1fr));gap:26px;max-width:960px;padding:12px 12px 26px;align-items:start}
+.level-shelf .bk{border:0;background:none;padding:0;min-width:0;display:flex;flex-direction:column;align-items:center;font-family:var(--body);color:var(--plum);transform:none;cursor:pointer}
+.level-shelf .bk .bk-img{height:250px;width:100%;padding:0;margin-bottom:18px;opacity:1;display:block;transition:transform .25s}
+.level-shelf .bk-img img{height:100%;width:auto;max-width:100%;margin:0 auto;object-fit:contain;border-radius:3px 8px 8px 3px}
+.level-shelf .bk:hover .bk-img{transform:translateY(-6px)}
+.level-shelf .bk.on .bk-img img{outline:3px solid var(--coral);outline-offset:5px}
+.level-book-title{font:800 20px/1.15 var(--head);min-height:46px;display:flex;align-items:center;justify-content:center}
+.level-book-author{font:700 12px/1.4 var(--body);margin-top:6px}
+.level-shelf .bk:focus-visible{outline:3px solid var(--coral);outline-offset:8px;border-radius:8px}
+.pick .n-pick{font-size:24px}.pick .titles{justify-content:center;text-align:center;font-size:14px}
+@media(max-width:700px){.level-shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 22px}.level-shelf .bk .bk-img{height:190px}.level-book-title{font-size:18px}.level-book-author{font-size:11px}}

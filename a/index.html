@@ -57,7 +57,7 @@
     <div class="ways-stage">
       <div class="anchor a-open" data-anchor="1" data-src="img/kitap_acik.webp"><img src="img/kitap_acik.webp" alt="Açılan kitap"></div>
       <figure class="mode m1"><img src="img/mod_dinle.webp" alt=""><figcaption><b>Dinle</b><span class="note" id="listenNote">Hikâyenin sesine kulak ver,<br>kelime kelime keşfet</span></figcaption></figure>
-      <figure class="mode m2"><img src="img/mod_oku.webp" alt=""><figcaption><b>Sesli oku</b><span class="note">aynı bölümü tekrar oku:<br>58 kelime/dk, rekor!</span></figcaption></figure>
+      <figure class="mode m2"><img src="img/mod_oku.webp" alt=""><figcaption><b>Sesli oku</b></figcaption></figure>
       <figure class="mode m3"><img src="img/mod_oyna.webp" alt=""><figcaption><b>Oyna</b><span class="note" id="playNote">Seçtiğin hikâyenin<br>kelimeleriyle oyna</span></figcaption></figure>
       <figure class="mode m4"><img src="img/mod_izle.webp" alt=""><figcaption><b>İzle</b><span class="note">kilit sahne<br>kısa bir animasyonla</span></figcaption></figure>
     </div>
@@ -77,24 +77,20 @@
   <div class="tear" data-fill="#FFF5EA"></div>
 </section>
 
-<!-- 3. PICK YOUR VERSION ─ the book lands on the chosen shelf -->
+<!-- 3. PICK YOUR LEVEL — each level has its own books -->
 <section class="s pick" id="surum">
   <div class="wrap">
-    <p class="eyebrow center">Sürümünü seç</p>
-    <h2 class="center">Aynı <span data-book-title>Pinokyo</span>, <span class="hl-red">üç boyda</span>.</h2>
-    <p class="lead center narrow">2. sınıftaki çocuk da 7. sınıftaki de aynı eseri okur, her biri kendi seviyesinde. Uygun sürüm kısa bir seviye testinden sonra kendiliğinden açılır.</p>
-    <div class="toggle" role="tablist" aria-label="Sürüm">
-      <button role="tab" data-lv="minik">Minik <small>1–2. sınıf</small></button>
-      <button role="tab" data-lv="kasif" class="on" aria-selected="true">Kâşif <small>3–5. sınıf</small></button>
-      <button role="tab" data-lv="usta">Usta <small>6–8. sınıf</small></button>
+    <p class="eyebrow center">Seviyene göre kitaplar</p>
+    <h2 class="center">Her seviyeye <span class="hl-red">başka bir macera.</span></h2>
+    <p class="lead center narrow">Okuma seviyene uygun kitapları keşfet, merak ettiğin eserle yola çık.</p>
+    <div class="toggle" role="tablist" aria-label="Okuma seviyesi">
+      <button id="level-minik" role="tab" aria-controls="levelBooks" data-lv="minik">Minik <small>1–2. sınıf</small></button>
+      <button id="level-kasif" role="tab" aria-controls="levelBooks" data-lv="kasif" class="on" aria-selected="true">Kâşif <small>3–5. sınıf</small></button>
+      <button id="level-usta" role="tab" aria-controls="levelBooks" data-lv="usta">Usta <small>6–8. sınıf</small></button>
     </div>
-    <div class="shelf">
-      <div class="bk" data-lv="minik"><div class="bk-img"><img src="img/kitap_minik.webp" alt="Minik sürüm: ince resimli kitap"></div><p class="bk-n">6 durak</p></div>
-      <div class="bk on" data-lv="kasif"><div class="bk-img"><img src="img/kitap_kasif.webp" alt="Kâşif sürüm"></div><p class="bk-n">8 durak</p></div>
-      <div class="bk" data-lv="usta"><div class="bk-img"><img src="img/kitap_usta.webp" alt="Usta sürüm: kalın kitap"></div><p class="bk-n">10 durak</p></div>
-    </div>
-    <p class="note n-pick" id="lvNote">Kâşif: metin sadeleşir, sesli okuma ve akıcılık öne çıkar.</p>
-    <div class="titles" id="lvTitles"></div>
+    <div class="shelf level-shelf" id="levelBooks" role="tabpanel" aria-labelledby="level-kasif"></div>
+    <p class="note n-pick" id="lvNote"></p>
+    <p class="titles" id="lvTitles" aria-live="polite"></p>
   </div>
   <div class="tear" data-fill="#46202F"></div>
 </section>
@@ -106,8 +102,8 @@
       <p class="eyebrow on-dark">Başlamak değil, bitirmek</p>
       <h2 class="on-dark">Biten her kitap,<br><span class="hl-sun">pasaporta bir damga.</span></h2>
       <ol class="timeline">
-        <li><b>Eserini seç</b><span>Her eser bir patika. Çocuğa uygun sürüm kendiliğinden açılır.</span></li>
-        <li><b>Durakları geç</b><span>Eser 6–10 durağa bölünür. Her durak günlük okumaya tam oturur.</span></li>
+        <li><b>Eserini seç</b><span>Her eser bir patika. Çocuk, seviyesine uygun kitaplar arasından seçer.</span></li>
+        <li><b>Durakları geç</b><span>Eser duraklara bölünür. Her durak günlük okumaya tam oturur.</span></li>
         <li><b>Belgeni al</b><span>Final aşamasını geçen çocuk, adının yazdığı QR kodlu okuma belgesini kazanır.</span></li>
       </ol>
       <p class="small on-dark">Puan hız için değil, doğruluk ve emek için verilir. Rozetler yolda gelir: Rekor Kıran, Süper Dedektif, Kitap Kurdu.</p>
@@ -131,7 +127,7 @@
     <div class="cert" id="cert">
       <div class="cert-top"><img src="img/okumino_logo.webp" alt=""><span>Okuma Belgesi</span></div>
       <p class="cert-name" id="certName">Öğrencinin adı</p>
-      <p class="cert-body"><b>Pinokyo</b> (Kâşif sürümü) eserini okuyup tüm durakları başarıyla tamamladı.</p>
+      <p class="cert-body"><b>Pinokyo</b> eserini okuyup tüm durakları başarıyla tamamladı.</p>
       <div class="cert-foot">
         <span><b>8</b> durak</span><span><b>48</b> adım</span>
         <svg class="qr" id="qr" viewBox="0 0 21 21" aria-label="QR doğrulama"></svg>

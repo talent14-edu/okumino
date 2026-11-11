@@ -2,6 +2,14 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav = $('.nav'), darkSection = $('.stamp');
+  function updateNav() {
+    nav.classList.toggle('scrolled', scrollY > 20);
+    const rect = darkSection.getBoundingClientRect();
+    nav.classList.toggle('over-dark', rect.top < nav.offsetHeight && rect.bottom > nav.offsetHeight);
+  }
+  addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
   const BOOKS = [
     { id: 'pinokyo', title: 'Pinokyo', author: 'Carlo Collodi', desc: 'Küçük bir kukla, kocaman bir merak. Pinokyo ile dürüstlüğün ve cesaretin izini sür.', listen: 'Pinokyo’nun dünyasını seslerden keşfet.', play: 'Pinokyo’nun kelimeleriyle bulmacayı çöz.' },
     { id: 'heidi', title: 'Heidi', author: 'Johanna Spyri', desc: 'Dağların, dostluğun ve sıcacık bir yuvanın peşinde Heidi’ye katıl.' },
@@ -15,6 +23,7 @@
     { id: 'bulut', title: 'Bulut Postacısı', author: 'Okumino', original: true, desc: 'Gökyüzünde teslim edilmeyi bekleyen bir mektup ve yepyeni dostluklar. Örnek özgün hikâye.' }
   ];
   let selectedBook = BOOKS[0], currentLevel = 'kasif';
+  const bookLevel = { heidi: 'minik', mino: 'minik', bulut: 'minik', pinokyo: 'kasif', alice: 'kasif', oz: 'kasif', pollyanna: 'kasif', 'beyaz-dis': 'usta', define: 'usta', kelimeler: 'usta' };
   const coverPath = book => `img/covers/${book.id}.webp`;
   const bookcase = $('#bookcase');
   const spineColors = ['#216f8c', '#61834b', '#8a5b9e', '#2e8b7f', '#547d99', '#b65c42', '#bd7074', '#565394', '#417b60', '#5799aa'];
@@ -34,6 +43,7 @@
   }
   function selectBook(id) {
     selectedBook = BOOKS.find(book => book.id === id) || BOOKS[0];
+    currentLevel = bookLevel[selectedBook.id];
     const src = coverPath(selectedBook);
     $$('.rack-book').forEach(button => {
       const active = button.dataset.book === selectedBook.id;
@@ -56,7 +66,6 @@
     $$('.a-open, .a-stamp').forEach(el => { el.dataset.src = src; });
     $('.a-open img').src = src;
     $('.a-open img').alt = `${selectedBook.title} yolculuğu`;
-    $$('.bk-img img').forEach(img => { img.src = src; img.alt = selectedBook.title; });
     setLevel(currentLevel);
   }
   bookcase.addEventListener('click', event => {
@@ -84,34 +93,65 @@
     t.innerHTML = `<svg viewBox="0 0 100 34" preserveAspectRatio="none"><path d="${d}" fill="${t.dataset.fill}"/></svg>`;
   });
 
-  /* level picker */
+  /* A distinct selection of books for each reading level. */
   const LV = {
-    minik: { note: 'Minik: dinleme ve görsel ağırlıklı, kısa metinler, resimli kelime oyunları.', stops: 6, titles: [['Çirkin Ördek Yavrusu', 'Andersen'], ['Bremen Mızıkacıları', 'Grimm'], ['Kurt ile Yedi Keçi', 'Grimm'], ['Tavşan Peter', 'B. Potter'], ['Nasreddin Hoca', 'Halk edebiyatı']] },
-    kasif: { note: 'Kâşif: metin sadeleşir, sesli okuma ve akıcılık öne çıkar.', stops: 8, titles: [['Pinokyo', 'C. Collodi'], ['Oz Büyücüsü', 'L. F. Baum'], ['Heidi', 'J. Spyri'], ['Alice Harikalar Diyarında', 'L. Carroll'], ['Pollyanna', 'E. H. Porter']] },
-    usta: { note: 'Usta: asıl metne yakın, göz egzersizleri, çıkarım ve yazma ağırlıklı.', stops: 10, titles: [['Beyaz Diş', 'J. London'], ['Pal Sokağı Çocukları', 'F. Molnár'], ['Define Adası', 'R. L. Stevenson'], ['Seksen Günde Devriâlem', 'J. Verne'], ['Dede Korkut Hikâyeleri', 'Anonim']] }
+    minik: { note: 'Minik okurlar için hayal gücü ve keşifle başlayan hikâyeler.', stops: 6 },
+    kasif: { note: 'Meraklı kâşifler için yeni dünyalar ve unutulmaz kahramanlar.', stops: 8 },
+    usta: { note: 'Usta okurlar için derinleşen hikâyeler ve büyük maceralar.', stops: 10 }
   };
   const lvName = { minik: 'Minik', kasif: 'Kâşif', usta: 'Usta' };
+  const levelShelf = $('#levelBooks');
   function setLevel(k) {
+    const books = BOOKS.filter(book => bookLevel[book.id] === k);
+    if (!books.length) return;
+    if (bookLevel[selectedBook.id] !== k) {
+      selectBook(books[0].id);
+      return;
+    }
     currentLevel = k;
-    $$('.toggle button').forEach(b => { const on = b.dataset.lv === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
-    $$('.bk').forEach(b => {
-      const on = b.dataset.lv === k; b.classList.toggle('on', on);
-      const img = $('.bk-img', b);
-      if (on) { img.dataset.anchor = '2'; img.dataset.src = $('img', img).getAttribute('src'); }
-      else { delete img.dataset.anchor; }
-      img.classList.toggle('anchor', on);
+    $$('.toggle button').forEach(button => {
+      const on = button.dataset.lv === k;
+      button.classList.toggle('on', on);
+      button.setAttribute('aria-selected', String(on));
+      button.tabIndex = on ? 0 : -1;
+    });
+    if (levelShelf.dataset.level !== k) {
+      levelShelf.innerHTML = books.map(book => `<button type="button" class="bk" data-level-book="${book.id}" aria-pressed="false"><span class="bk-img"><img src="${coverPath(book)}" width="180" height="270" alt=""></span><span class="level-book-title">${book.title}</span><span class="level-book-author">${book.author}</span></button>`).join('');
+      levelShelf.dataset.level = k;
+      levelShelf.style.setProperty('--book-count', books.length);
+    }
+    levelShelf.setAttribute('aria-labelledby', `level-${k}`);
+    $$('.bk', levelShelf).forEach(button => {
+      const on = button.dataset.levelBook === selectedBook.id;
+      button.classList.toggle('on', on);
+      button.setAttribute('aria-pressed', String(on));
+      const cover = $('.bk-img', button);
+      if (on) { cover.dataset.anchor = '2'; cover.dataset.src = coverPath(selectedBook); }
+      else { delete cover.dataset.anchor; delete cover.dataset.src; }
     });
     $('#lvNote').textContent = LV[k].note;
-    $('#lvTitles').textContent = `${selectedBook.title} · ${selectedBook.author} · ${lvName[k]} yolculuğu`;
+    $('#lvTitles').textContent = `Seçilen kitap: ${selectedBook.title} · ${lvName[k]}`;
     const stops = LV[k].stops;
-    $('.cert-body').innerHTML = `<b>${selectedBook.title}</b> (${lvName[k]} sürümü) eserini okuyup tüm durakları başarıyla tamamladı.`;
+    $('.cert-body').innerHTML = `<b>${selectedBook.title}</b> eserini okuyup tüm durakları başarıyla tamamladı.`;
     $('.cert-foot').children[0].innerHTML = `<b>${stops}</b> durak`;
     $('.cert-foot').children[1].innerHTML = `<b>${stops * 6}</b> adım`;
     $('.kpis div:nth-child(2) span').textContent = `/ ${stops}`;
     if (!reduce) layout();
   }
-  $$('.toggle button').forEach(b => b.addEventListener('click', () => setLevel(b.dataset.lv)));
-  $$('.bk').forEach(b => b.addEventListener('click', () => setLevel(b.dataset.lv)));
+  $$('.toggle button').forEach(button => button.addEventListener('click', () => setLevel(button.dataset.lv)));
+  $('.toggle').addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    const buttons = $$('.toggle button'), index = buttons.indexOf(event.target);
+    if (index < 0) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length;
+    setLevel(buttons[next].dataset.lv);
+    buttons[next].focus({ preventScroll: true });
+  });
+  levelShelf.addEventListener('click', event => {
+    const button = event.target.closest('[data-level-book]');
+    if (button) selectBook(button.dataset.levelBook);
+  });
 
   /* certificate */
   const nameIn = $('#nameIn'), certName = $('#certName');
@@ -127,7 +167,7 @@
 
   /* FAQ */
   const FAQ = [
-    ['Okumino hangi yaş grubu için?', '1–8. sınıf öğrencileri için. Her eser Minik (1–2), Kâşif (3–5) ve Usta (6–8) olmak üzere üç sürümde hazırlanır; çocuğa uygun sürüm kısa bir seviye testiyle belirlenir.'],
+    ['Okumino hangi yaş grubu için?', '1–8. sınıf öğrencileri için. Minik (1–2), Kâşif (3–5) ve Usta (6–8) seviyelerinin her birinde farklı kitaplar yer alır; çocuk seviyesine uygun eserler arasından seçer.'],
     ['Eserler telifli mi?', 'Patikalar iki tür eserden oluşur: telif süresi dolmuş (kamu malı) sevilen eserler ve Okumino ekibinin yazdığı özgün hikâyeler. Uyarlamalar, seslendirmeler ve görseller de Okumino ekibi tarafından özgün olarak hazırlanır.'],
     ['Öğrencinin ses kaydı ne oluyor?', 'Sesli okuma kayıtları yalnızca akıcılık puanını hesaplamak için kullanılır ve puanlamadan sonra silinir. Kayıt için veli onayı alınır.'],
     ['Müfredatla bağlantısı var mı?', 'Var, ama çocuğun karşısına çıkmaz. Her adım arka planda Türkçe dersi kazanımları ve okuma becerileriyle eşleştirilir; öğretmen raporlarında bu eşleşme görünür.'],
