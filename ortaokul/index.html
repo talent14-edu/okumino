@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f9f5">
+  <meta name="description" content="Define Adası: ortaokul için altı etkileşimli görev. Bölümü oku, kelime şifresini çöz, haritadaki rotayı izle ve kararını kanıtla.">
+  <title>Haritanın Sırrı · Define Adası · Okumino</title>
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="playful.css?v=2">
+  <link rel="stylesheet" href="island.css?v=1">
+</head>
+<body>
+  <svg class="symbol-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="m11 5-5 4H3v6h3l5 4V5zm4 3c3 2 3 6 0 8m3-11c5 4 5 10 0 14"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1zm0 0v15"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2m-7 9v3m-4 0h8"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4m0 3v.1"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3z"/></symbol>
+  </defs></svg>
+
+  <div class="lesson-app">
+    <header class="topbar">
+      <a class="brand" href="../site_a/index.html" data-library aria-label="Okumino kitaplığına dön"><img src="assets/okumino-logo.webp" width="110" height="48" alt="Okumino"></a>
+      <div class="book-heading"><span>DEFİNE ADASI <span class="heading-separator">/</span> 1. ADIM</span><b>Haritanın sırrı</b></div>
+      <div class="top-tools">
+        <button class="icon-button" type="button" data-action="help" aria-label="Nasıl oynanır?" title="Nasıl oynanır?"><svg><use href="#i-help"/></svg></button>
+        <button class="icon-button fullscreen-tool" type="button" data-action="fullscreen" aria-label="Tam ekran" title="Tam ekran"><svg><use href="#i-expand"/></svg></button>
+        <button class="icon-button" type="button" data-action="reset-dialog" aria-label="Adımı baştan başlat" title="Baştan başla"><svg><use href="#i-reset"/></svg></button>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="journey-rail" aria-label="Bu adımın etkinlikleri">
+        <div class="mino-note"><img src="assets/mino.webp" width="180" height="210" alt="Kitap okuyan Mino"><div class="mino-bubble"><b>Rotayı sen çıkar.</b><p id="minoNote">Her ayrıntı bir ipucu.</p></div></div>
+        <div class="rail-caption">6–7. SINIF · BİR OKUMA MACERASI</div>
+        <nav id="activityNav" class="activity-nav" aria-label="Etkinlikler"></nav>
+        <div class="discovery-badge"><img src="assets/icons/glowing_star.png" width="35" height="35" alt=""><span><b id="discoveryCount">0</b> / 6 keşif</span></div>
+        <footer class="lesson-footer">
+          <div class="footer-progress"><span id="progressText">1 / 6 etkinlik</span><div class="progress-track" aria-hidden="true"><i id="progressFill"></i></div></div>
+          <div class="footer-buttons"><button id="previous" class="back-button" type="button" aria-label="Önceki etkinlik"><svg><use href="#i-back"/></svg><span>Geri</span></button><button id="next" class="primary-button" type="button"><span>Devam et</span><svg><use href="#i-arrow"/></svg></button></div>
+        </footer>
+      </aside>
+      <main id="panel" class="lesson-panel" tabindex="-1" aria-label="Etkinlik"></main>
+    </div>
+  </div>
+
+  <dialog id="infoDialog" class="info-dialog" aria-labelledby="dialogTitle"><button class="dialog-close icon-button" data-action="close-dialog" aria-label="Pencereyi kapat"><svg><use href="#i-close"/></svg></button><h2 id="dialogTitle"></h2><div id="dialogBody"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><div class="no-script">Bu küçük yolculuk için tarayıcında JavaScript açık olmalı.</div></noscript>
+  <script src="app.js?v=1"></script>
+</body>
+</html>
