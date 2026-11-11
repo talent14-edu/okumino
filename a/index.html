@@ -19,47 +19,46 @@
 <header class="nav">
   <a href="#" class="brand"><img src="img/okumino_logo.webp" alt="Okumino"></a>
   <nav class="links">
+    <a href="#kitaplik">Kitaplık</a>
     <a href="#yollar">Nasıl çalışır?</a>
-    <a href="#surum">Patikalar</a>
-    <a href="#damga">Ödüller</a>
     <a href="#sinif">Okullar için</a>
-    <a href="#sss">SSS</a>
   </nav>
   <a href="#demo" class="btn btn-sm">Demo iste</a>
 </header>
 
-<!-- 1. HERO ─ mascot walks in, a book drops, the headline follows -->
-<section class="s hero" id="ust">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow">1–8. sınıf · Türkçe okuma</p>
-      <h1>Her eser bir <span class="hl-blue">patika</span>,<br>her çocuk bir <span class="hl-red">okur</span>.</h1>
-      <p class="lead">Pinokyo'dan Beyaz Diş'e sevilen eserler ve yalnızca Okumino'da okunabilecek özgün hikâyeler adım adım açılır. Çocuk dinler, okur, oynar, izler ve kitabı sonuna kadar bitirir.</p>
-      <div class="cta-row">
-        <a href="#demo" class="btn">Okulum için demo iste</a>
-        <a href="#yollar" class="btn btn-ghost">Kitabın peşine düş ↓</a>
+<!-- One bookshelf, one chosen story. -->
+<section class="s reading-hero" id="ust" aria-labelledby="heroTitle">
+  <div class="wrap reading-wrap" id="kitaplik">
+    <div class="reading-heading">
+      <p class="reading-age">1–8. sınıf için okuma maceraları</p>
+      <h1 id="heroTitle">Bir kitap seç.<br> <span>Macera başlasın.</span></h1>
+    </div>
+    <div class="reading-corner">
+      <img class="reading-mino" src="img/mino_selam.webp" width="620" height="800" alt="Mino, kitaplığından bir kitap seçmeni bekliyor" fetchpriority="high">
+      <div class="reading-cabinet">
+        <div id="bookcase" class="reading-rack" role="group" aria-label="Kitaplık: bir kitabın sırtına dokun, kapağını keşfet"></div>
+        <noscript><p>Kitap seçmek için JavaScript’i etkinleştirin.</p></noscript>
       </div>
     </div>
-    <div class="stage">
-      <img class="mascot walk" src="img/mino_yuruyor_bos.webp" alt="Okumino maskotu tilki Mino yürüyerek geliyor">
-      <div class="anchor a-hero" data-anchor="0" data-src="img/kitap_kapali.webp"><img src="img/kitap_kapali.webp" alt="Eski, tozlu bir kitap"></div>
-      <div class="dust" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <p class="note n-hero">tozlu bir kitap…<br>ama içi kıpır kıpır!</p>
+    <div class="reading-selection">
+      <div class="reading-book-info" aria-live="polite" aria-atomic="true"><h2 id="chosenTitle">Pinokyo</h2><p id="chosenAuthor">Carlo Collodi</p><small id="originalNote" hidden>Okumino özgün hikâyesi · örnek başlık</small></div>
+      <a class="btn" id="startJourney" href="#yollar">Maceraya başla <span aria-hidden="true">→</span></a>
     </div>
   </div>
   <div class="tear" data-fill="#FFE3C8"></div>
 </section>
 
-<!-- 2. ONE BOOK, FOUR WAYS ─ book opens, modes pop out -->
+<!-- 2. ONE BOOK, FOUR WAYS ─ the selected book begins its journey -->
 <section class="s ways" id="yollar">
   <div class="wrap">
     <p class="eyebrow center">Bir kitap, dört yol</p>
     <h2 class="center">Kitap bir yerde, alıştırma başka yerde değil.<br><span class="hl-blue">Hepsi hikâyenin içinde.</span></h2>
+    <p class="journey-label center"><span data-book-title>Pinokyo</span> · bir kitap, dört keşif</p>
     <div class="ways-stage">
       <div class="anchor a-open" data-anchor="1" data-src="img/kitap_acik.webp"><img src="img/kitap_acik.webp" alt="Açılan kitap"></div>
-      <figure class="mode m1"><img src="img/mod_dinle.webp" alt=""><figcaption><b>Dinle</b><span class="note">Gepetto'nun sesiyle,<br>kelime kelime</span></figcaption></figure>
+      <figure class="mode m1"><img src="img/mod_dinle.webp" alt=""><figcaption><b>Dinle</b><span class="note" id="listenNote">Hikâyenin sesine kulak ver,<br>kelime kelime keşfet</span></figcaption></figure>
       <figure class="mode m2"><img src="img/mod_oku.webp" alt=""><figcaption><b>Sesli oku</b><span class="note">aynı bölümü tekrar oku:<br>58 kelime/dk, rekor!</span></figcaption></figure>
-      <figure class="mode m3"><img src="img/mod_oyna.webp" alt=""><figcaption><b>Oyna</b><span class="note">bulmaca da Pinokyo'nun<br>kendi kelimeleriyle</span></figcaption></figure>
+      <figure class="mode m3"><img src="img/mod_oyna.webp" alt=""><figcaption><b>Oyna</b><span class="note" id="playNote">Seçtiğin hikâyenin<br>kelimeleriyle oyna</span></figcaption></figure>
       <figure class="mode m4"><img src="img/mod_izle.webp" alt=""><figcaption><b>İzle</b><span class="note">kilit sahne<br>kısa bir animasyonla</span></figcaption></figure>
     </div>
     <div class="durak">
@@ -82,7 +81,7 @@
 <section class="s pick" id="surum">
   <div class="wrap">
     <p class="eyebrow center">Sürümünü seç</p>
-    <h2 class="center">Aynı Pinokyo, <span class="hl-red">üç boyda</span>.</h2>
+    <h2 class="center">Aynı <span data-book-title>Pinokyo</span>, <span class="hl-red">üç boyda</span>.</h2>
     <p class="lead center narrow">2. sınıftaki çocuk da 7. sınıftaki de aynı eseri okur, her biri kendi seviyesinde. Uygun sürüm kısa bir seviye testinden sonra kendiliğinden açılır.</p>
     <div class="toggle" role="tablist" aria-label="Sürüm">
       <button role="tab" data-lv="minik">Minik <small>1–2. sınıf</small></button>
@@ -117,7 +116,7 @@
       <div class="pp">
         <img class="passport" src="img/pasaport.webp" alt="Okuma pasaportu">
         <div class="anchor a-stamp" data-anchor="3" data-src="img/kitap_kapali.webp" data-end="1"></div>
-        <div class="ink" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#FFFDF5" stroke="currentColor" stroke-width="6" stroke-dasharray="7 4"/><text x="50" y="47" text-anchor="middle">PİNOKYO</text><text x="50" y="68" text-anchor="middle" class="t2">bitti ✓</text></svg></div>
+        <div class="ink" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#FFFDF5" stroke="currentColor" stroke-width="6" stroke-dasharray="7 4"/><text id="stampTitle" x="50" y="47" text-anchor="middle">PİNOKYO</text><text x="50" y="68" text-anchor="middle" class="t2">bitti ✓</text></svg></div>
         <img class="seal" src="img/muhur.webp" alt="" aria-hidden="true">
       </div>
       <p class="note n-stamp on-dark">senin damgan!</p>
@@ -152,7 +151,7 @@
       <figure class="photo"><img src="img/sinif.webp" alt="Sınıfta tablette okuyan iki öğrenci ve öğretmenleri"><span class="note n-photo">pazartesi, 3-B sınıfı</span></figure>
       <div class="panel">
         <p class="panel-k">Öğretmen paneli</p>
-        <p class="panel-h">3-B Sınıfı · Pinokyo</p>
+        <p class="panel-h">3-B Sınıfı · <span data-book-title>Pinokyo</span></p>
         <div class="kpis">
           <div><small>Ort. akıcılık</small><b>71</b><span>k/dk</span></div>
           <div><small>Durak ilerlemesi</small><b>5</b><span>/ 8</span></div>
@@ -207,7 +206,7 @@
 <footer class="foot">
   <div class="wrap foot-grid">
     <div><img src="img/okumino_logo.webp" alt="Okumino" class="foot-logo"><p>Kitapları oynayarak bitiren çocuklar için Türkçe okuma patikaları.</p></div>
-    <div><b>Ürün</b><a href="#yollar">Nasıl çalışır?</a><a href="#surum">Patikalar</a><a href="#damga">Ödüller</a></div>
+    <div><b>Ürün</b><a href="#kitaplik">Kitaplık</a><a href="#yollar">Nasıl çalışır?</a><a href="#surum">Patikalar</a><a href="#damga">Ödüller</a></div>
     <div><b>Kimler için</b><a href="#sinif">Okullar</a><a href="#sinif">Veliler</a></div>
     <div><b>İletişim</b><span>[E-POSTA ADRESİ]</span><span>[TELEFON]</span><a href="#">KVKK aydınlatma metni</a></div>
   </div>

@@ -2,6 +2,77 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const BOOKS = [
+    { id: 'pinokyo', title: 'Pinokyo', author: 'Carlo Collodi', desc: 'Küçük bir kukla, kocaman bir merak. Pinokyo ile dürüstlüğün ve cesaretin izini sür.', listen: 'Pinokyo’nun dünyasını seslerden keşfet.', play: 'Pinokyo’nun kelimeleriyle bulmacayı çöz.' },
+    { id: 'heidi', title: 'Heidi', author: 'Johanna Spyri', desc: 'Dağların, dostluğun ve sıcacık bir yuvanın peşinde Heidi’ye katıl.' },
+    { id: 'alice', title: 'Alice Harikalar Diyarında', author: 'Lewis Carroll', desc: 'Beyaz tavşanı takip et. Her kapının ardında yeni bir sürpriz seni bekliyor.' },
+    { id: 'oz', title: 'Oz Büyücüsü', author: 'L. Frank Baum', desc: 'Sarı tuğlalı yolda yürü; cesareti, dostluğu ve eve dönüş yolunu keşfet.' },
+    { id: 'beyaz-dis', title: 'Beyaz Diş', author: 'Jack London', desc: 'Karlarla kaplı doğada, Beyaz Diş ile güvenin ve dostluğun izini bul.' },
+    { id: 'define', title: 'Define Adası', author: 'Robert Louis Stevenson', desc: 'Haritayı aç, yelkenleri hazırla. Gizemli bir adaya doğru yola çık.' },
+    { id: 'pollyanna', title: 'Pollyanna', author: 'Eleanor H. Porter', desc: 'Küçük mutlulukları bulma oyununda Pollyanna’nın dünyasına konuk ol.' },
+    { id: 'mino', title: 'Mino ve Yıldız Tohumu', author: 'Okumino', original: true, desc: 'Mino’nun bulduğu minicik tohum, gökyüzüne uzanan bir maceranın başlangıcı. Örnek özgün hikâye.' },
+    { id: 'kelimeler', title: 'Kayıp Kelimeler Ormanı', author: 'Okumino', original: true, desc: 'Kelimeler birer birer kayboluyor! Ormanın sesini geri getirebilir misin? Örnek özgün hikâye.' },
+    { id: 'bulut', title: 'Bulut Postacısı', author: 'Okumino', original: true, desc: 'Gökyüzünde teslim edilmeyi bekleyen bir mektup ve yepyeni dostluklar. Örnek özgün hikâye.' }
+  ];
+  let selectedBook = BOOKS[0], currentLevel = 'kasif';
+  const coverPath = book => `img/covers/${book.id}.webp`;
+  const bookcase = $('#bookcase');
+  const spineColors = ['#216f8c', '#61834b', '#8a5b9e', '#2e8b7f', '#547d99', '#b65c42', '#bd7074', '#565394', '#417b60', '#5799aa'];
+  for (let row = 0; row < 2; row++) {
+    const shelf = document.createElement('div');
+    shelf.className = 'rack-row';
+    shelf.innerHTML = BOOKS.slice(row * 5, row * 5 + 5).map((book, index) => {
+      const n = row * 5 + index;
+      return `<button type="button" class="rack-book" data-book="${book.id}" style="--spine-color:${spineColors[n]};--spine-font:${Math.min(17, 330 / book.title.length).toFixed(1)}px;--height:${[270,252,280,262,274,258,268,282,264,276][n]}px" aria-label="${book.title}, ${book.author}${book.original ? ', Okumino özgün, örnek başlık' : ''}" aria-pressed="false">
+        <span class="rack-model">
+          <span class="rack-front"><img src="${coverPath(book)}" width="180" height="270" alt=""></span>
+          <span class="rack-spine" aria-hidden="true"><span class="spine-star">✦</span><b>${book.title}</b><small>${book.author}</small></span>
+        </span>
+      </button>`;
+    }).join('');
+    bookcase.appendChild(shelf);
+  }
+  function selectBook(id) {
+    selectedBook = BOOKS.find(book => book.id === id) || BOOKS[0];
+    const src = coverPath(selectedBook);
+    $$('.rack-book').forEach(button => {
+      const active = button.dataset.book === selectedBook.id;
+      button.setAttribute('aria-pressed', String(active));
+      const cover = $('.rack-front', button);
+      if (active) { cover.dataset.anchor = '0'; cover.dataset.src = src; }
+      else { delete cover.dataset.anchor; delete cover.dataset.src; }
+    });
+    $$('[data-book-title]').forEach(el => { el.textContent = selectedBook.title; });
+    $('#chosenTitle').textContent = selectedBook.title;
+    $('#chosenAuthor').textContent = selectedBook.author;
+    $('#originalNote').hidden = !selectedBook.original;
+    $('#startJourney').setAttribute('aria-label', `${selectedBook.title} ile yolculuğa başla`);
+    $('#listenNote').textContent = selectedBook.listen || `${selectedBook.title}: dinle, hayal et, keşfet.`;
+    $('#playNote').textContent = selectedBook.play || 'Bu hikâyenin kelimeleriyle bulmacaları çöz.';
+    const stamp = $('#stampTitle');
+    stamp.textContent = selectedBook.title.toLocaleUpperCase('tr-TR');
+    stamp.setAttribute('textLength', '76');
+    stamp.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+    $$('.a-open, .a-stamp').forEach(el => { el.dataset.src = src; });
+    $('.a-open img').src = src;
+    $('.a-open img').alt = `${selectedBook.title} yolculuğu`;
+    $$('.bk-img img').forEach(img => { img.src = src; img.alt = selectedBook.title; });
+    setLevel(currentLevel);
+  }
+  bookcase.addEventListener('click', event => {
+    const button = event.target.closest('[data-book]');
+    if (button) selectBook(button.dataset.book);
+  });
+  bookcase.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    const buttons = $$('.rack-book');
+    const index = buttons.indexOf(event.target.closest('.rack-book'));
+    if (index < 0) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length;
+    buttons[next].focus({ preventScroll: true });
+    selectBook(buttons[next].dataset.book);
+  });
 
   /* torn-paper edges: a jagged band filled with the next section's colour */
   $$('.tear').forEach((t, k) => {
@@ -13,10 +84,6 @@
     t.innerHTML = `<svg viewBox="0 0 100 34" preserveAspectRatio="none"><path d="${d}" fill="${t.dataset.fill}"/></svg>`;
   });
 
-  /* mascot: walk in, then idle bob */
-  const mascot = $('.mascot');
-  mascot.addEventListener('animationend', () => { mascot.classList.remove('walk'); mascot.classList.add('idle'); }, { once: true });
-
   /* level picker */
   const LV = {
     minik: { note: 'Minik: dinleme ve görsel ağırlıklı, kısa metinler, resimli kelime oyunları.', stops: 6, titles: [['Çirkin Ördek Yavrusu', 'Andersen'], ['Bremen Mızıkacıları', 'Grimm'], ['Kurt ile Yedi Keçi', 'Grimm'], ['Tavşan Peter', 'B. Potter'], ['Nasreddin Hoca', 'Halk edebiyatı']] },
@@ -25,6 +92,7 @@
   };
   const lvName = { minik: 'Minik', kasif: 'Kâşif', usta: 'Usta' };
   function setLevel(k) {
+    currentLevel = k;
     $$('.toggle button').forEach(b => { const on = b.dataset.lv === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
     $$('.bk').forEach(b => {
       const on = b.dataset.lv === k; b.classList.toggle('on', on);
@@ -34,11 +102,12 @@
       img.classList.toggle('anchor', on);
     });
     $('#lvNote').textContent = LV[k].note;
-    $('#lvTitles').innerHTML = LV[k].titles.map(t => `<span>${t[0]} <i>· ${t[1]}</i></span>`).join('') + '<span class="own">+ Okumino\'ya özel özgün hikâyeler</span>';
+    $('#lvTitles').textContent = `${selectedBook.title} · ${selectedBook.author} · ${lvName[k]} yolculuğu`;
     const stops = LV[k].stops;
-    $('.cert-body').innerHTML = `<b>Pinokyo</b> (${lvName[k]} sürümü) eserini okuyup tüm durakları başarıyla tamamladı.`;
+    $('.cert-body').innerHTML = `<b>${selectedBook.title}</b> (${lvName[k]} sürümü) eserini okuyup tüm durakları başarıyla tamamladı.`;
     $('.cert-foot').children[0].innerHTML = `<b>${stops}</b> durak`;
     $('.cert-foot').children[1].innerHTML = `<b>${stops * 6}</b> adım`;
+    $('.kpis div:nth-child(2) span').textContent = `/ ${stops}`;
     if (!reduce) layout();
   }
   $$('.toggle button').forEach(b => b.addEventListener('click', () => setLevel(b.dataset.lv)));
@@ -84,12 +153,11 @@
   const ink = () => stampSec.classList.add('inked');
   if (reduce) {
     new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { ink(); o.disconnect(); } }), { threshold: .5 }).observe($('.passport-wrap'));
-    setLevel('kasif');
+    selectBook(selectedBook.id);
     return;
   }
   document.documentElement.classList.add('js-travel');
   const T = $('#traveler'), tin = $('.t-in'), ta = $('.ta'), tb = $('.tb');
-  tin.classList.add('drop');
   let stops = [];
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
@@ -133,6 +201,10 @@
     const mix = B.end ? 0 : smooth(.3, .85, e);
     tb.style.opacity = mix; ta.style.opacity = 1 - mix;
     T.style.opacity = B.end ? 1 - smooth(.72, .98, e) : 1;
+    // Keep the shelf cover in place until the reader reaches its row.
+    const onShelf = y <= stops[0].at;
+    T.style.visibility = onShelf ? 'hidden' : 'visible';
+    bookcase.classList.toggle('book-departed', !onShelf);
     if (B.end && e > .96) ink();
     modesFrame();
   }
@@ -151,32 +223,22 @@
     });
   }
 
+  let frameId = 0;
   function loop() {
     const d = scrollY - sy;
     sy = Math.abs(d) < .4 ? scrollY : sy + d * .22;
     frame();
-    requestAnimationFrame(loop);
+    frameId = Math.abs(scrollY - sy) > .4 ? requestAnimationFrame(loop) : 0;
   }
+  function scheduleFrame() { if (!frameId) frameId = requestAnimationFrame(loop); }
   ways.classList.add('scrub');
   addEventListener('resize', layout);
+  addEventListener('scroll', scheduleFrame, { passive: true });
   addEventListener('load', layout);
   document.fonts && document.fonts.ready.then(layout);
-  setLevel('kasif');
-  requestAnimationFrame(loop);
+  selectBook(selectedBook.id);
+  const rackResize = new ResizeObserver(() => layout());
+  $$('.rack-book').forEach(book => rackResize.observe(book));
+  scheduleFrame();
 
-  /* inertial wheel scrolling (Lenis); the page works natively if it fails to load */
-  const ls = document.createElement('script');
-  ls.src = 'https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js';
-  ls.onload = () => {
-    if (!window.Lenis) return;
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
-    const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
-    $$('a[href^="#"]').forEach(a => a.addEventListener('click', ev => {
-      const id = a.getAttribute('href'); if (id.length < 2) return;
-      const el = document.querySelector(id); if (!el) return;
-      ev.preventDefault(); lenis.scrollTo(el, { offset: -70 });
-    }));
-  };
-  document.head.appendChild(ls);
 })();
