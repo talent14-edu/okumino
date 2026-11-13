@@ -171,7 +171,6 @@ h1,h2,h3{font-family:var(--head);color:var(--plum);line-height:1.06;letter-spaci
 .durak-kitap{width:150px;aspect-ratio:2/3;border-radius:5px 10px 10px 5px;overflow:hidden;transform:rotate(3deg);box-shadow:8px 10px 0 -2px #FFF8EC,8px 10px 0 0 #E4D2BA,18px 28px 36px -18px rgba(70,32,47,.5)}
 .durak-kitap img{width:100%;height:100%;object-fit:cover}
 .durak-ust h2 .kitap-ad{color:var(--plum)}
-.durak-ust h2 span:last-child{display:block;font-size:.62em;margin-top:6px}
 .durak-ust .giris{margin-left:0}
 .etkinlik{list-style:none;max-width:1180px;margin:44px auto 0;display:grid;grid-template-columns:repeat(5,1fr);gap:16px;position:relative}
 .etkinlik::before{content:"";position:absolute;left:6%;right:6%;top:34px;border-top:4px dashed #E4C9A8;z-index:0}
@@ -188,7 +187,23 @@ h1,h2,h3{font-family:var(--head);color:var(--plum);line-height:1.06;letter-spaci
 .etkinlik p{margin-top:8px;font:600 15px/1.45 var(--body);text-align:center}
 .kelimeler{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
 .kelimeler span{padding:4px 10px;border-radius:10px;background:var(--butter);color:var(--coral-d);font:800 14px/1.2 var(--body)}
-.dipnot{max-width:1180px;margin:22px auto 0;text-align:center;font-size:14px;color:var(--mute)}
+/* patika: kitabın durakları; ilki açık, sonrakiler kilitli, sonda final damgası */
+.patika{position:relative;max-width:1180px;margin:46px auto 0;padding:44px 10px 34px;display:flex;justify-content:space-between;align-items:center}
+.patika::before{content:"";position:absolute;left:30px;right:30px;top:calc(44px + 50% - 39px);border-top:5px dashed #E4C9A8}
+.dur{position:relative;z-index:1;flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 3px var(--sand),0 6px 12px -8px rgba(70,32,47,.5);color:#B79A88}
+.dur svg{width:20px;height:20px}
+.dur small{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:7px;white-space:nowrap;font:800 13px/1 var(--body);color:var(--mute)}
+.dur.burada{width:70px;height:70px;background:var(--sun);color:var(--plum);font:800 30px/1 var(--head);box-shadow:0 0 0 7px rgba(247,181,56,.28),0 10px 18px -10px rgba(70,32,47,.6)}
+.dur.burada em{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);white-space:nowrap;padding:6px 12px;border-radius:10px;background:var(--plum);color:#fff;font:800 13px/1 var(--body);font-style:normal}
+.dur.burada em::after{content:"";position:absolute;left:50%;top:100%;margin-left:-6px;border:6px solid transparent;border-top-color:var(--plum)}
+.dur.final{width:66px;height:66px;background:var(--plum);box-shadow:0 0 0 6px rgba(70,32,47,.15)}
+.dur.final img{width:30px;height:auto}
+.dur.final small{color:var(--plum)}
+.etkinlik-kutu{position:relative;max-width:1180px;margin:8px auto 0;padding:22px 22px 24px;border-radius:30px;background:#FBE7CF}
+.etkinlik-kutu::before{content:"";position:absolute;top:-16px;left:var(--ok,38px);border:16px solid transparent;border-top:0;border-bottom-color:#FBE7CF}
+.etkinlik-baslik{font:700 26px/1.1 var(--hand);color:var(--plum);padding-left:6px}
+.etkinlik-baslik b{font:800 20px/1 var(--head);color:var(--coral-d)}
+.etkinlik-kutu .etkinlik{margin-top:16px}
 
 /* gezgin: seçilen kitap kaydırdıkça raftan pasaporta gider */
 #gezgin{position:absolute;left:0;top:0;z-index:30;pointer-events:none;display:none;border-radius:5px 10px 10px 5px;overflow:hidden;will-change:transform,width,height;
@@ -204,17 +219,20 @@ h1,h2,h3{font-family:var(--head);color:var(--plum);line-height:1.06;letter-spaci
 .oda.okuyor ~ #gezgin{display:none}
 
 /* ─── 3. seviye: ahşap dolap ─── */
-.seviye{background:#F3E2CC}
-.dolap{max-width:860px;margin:46px auto 0;padding:26px 26px 10px;border-radius:28px 28px 16px 16px;
-  background:linear-gradient(90deg,var(--wood-d),var(--wood) 4%,var(--wood) 96%,var(--wood-d));box-shadow:0 40px 60px -36px rgba(70,32,47,.7)}
-.katman{position:relative;padding:20px 26px 0;margin-bottom:16px;border-radius:12px;background:linear-gradient(180deg,#4A2814,#6B3B1C 70%,#7A4521)}
-.katman::after{content:"";position:absolute;left:-8px;right:-8px;bottom:-16px;height:22px;border-radius:4px;background:linear-gradient(180deg,var(--wood-l),var(--wood) 60%,var(--wood-d));box-shadow:0 8px 12px -6px rgba(0,0,0,.5)}
-.levha{position:absolute;left:50%;bottom:-13px;z-index:3;transform:translateX(-50%);padding:5px 18px;border-radius:8px;background:linear-gradient(180deg,#F7D27A,#D9A63F);color:var(--plum);
+.seviye{background:#F3E2CC;padding-top:clamp(70px,8vw,96px);padding-bottom:clamp(56px,6vw,76px)}
+.seviye .giris{margin-top:10px}
+/* yatay dolap: üç bölme yan yana, kaydırmadan görünür */
+.dolap{max-width:1180px;margin:30px auto 0;padding:18px 18px 24px;border-radius:26px 26px 14px 14px;display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:16px;
+  background:linear-gradient(180deg,var(--wood-l),var(--wood) 8%,var(--wood) 92%,var(--wood-d));box-shadow:0 40px 60px -36px rgba(70,32,47,.7)}
+.katman{position:relative;padding:16px 12px 0;border-radius:12px;background:linear-gradient(180deg,#4A2814,#6B3B1C 70%,#7A4521);box-shadow:inset 0 10px 18px -8px rgba(0,0,0,.55)}
+.katman::after{content:"";position:absolute;left:-6px;right:-6px;bottom:-14px;height:18px;border-radius:4px;background:linear-gradient(180deg,var(--wood-l),var(--wood) 60%,var(--wood-d));box-shadow:0 8px 12px -6px rgba(0,0,0,.5)}
+.levha{position:absolute;left:50%;bottom:-12px;z-index:3;transform:translateX(-50%);padding:5px 16px;border-radius:8px;background:linear-gradient(180deg,#F7D27A,#D9A63F);color:var(--plum);
   font:800 15px/1.1 var(--head);white-space:nowrap;box-shadow:0 2px 0 #9E7124,inset 0 1px 0 #FFF0C4}
 .levha small{font:700 13px var(--body);opacity:.8}
-.raf2{display:flex;align-items:flex-end;justify-content:center;gap:5px;min-height:300px;gap:7px;perspective:1800px;perspective-origin:50% -30%}
+.raf2{display:flex;align-items:flex-end;justify-content:center;gap:5px;min-height:0;padding-bottom:4px;perspective:1600px;perspective-origin:50% -30%}
 .raf2 .ac-ipucu{display:none}
-.secim{max-width:1120px;margin:34px auto 0;display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;font:800 19px var(--head);color:var(--plum)}
+.raf2 .etiket{top:-46px;font-size:13px;padding:6px 10px}
+.secim{max-width:1120px;margin:26px auto 0;display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;font:800 19px var(--head);color:var(--plum)}
 
 /* ─── 4. damga: aynı oda, gece ─── */
 .damga{background:var(--night);color:#F2E6F0;overflow:hidden;isolation:isolate}
@@ -317,6 +335,7 @@ h1,h2,h3{font-family:var(--head);color:var(--plum);line-height:1.06;letter-spaci
   .masa-kitap{width:220px}
   .etkinlik{grid-template-columns:repeat(2,1fr)}
   .etkinlik::before{display:none}
+  .dolap{grid-template-columns:1fr;max-width:560px}
   .dort{grid-template-columns:1fr}
   .yol-kart{grid-template-columns:96px 1fr;justify-items:start;text-align:left}
   .kim{grid-template-columns:1fr}
@@ -341,8 +360,16 @@ h1,h2,h3{font-family:var(--head);color:var(--plum);line-height:1.06;letter-spaci
   .etkinlik{grid-template-columns:1fr}
   .durak-ust{grid-template-columns:110px 1fr;gap:18px}
   .durak-kitap{width:100px}
-  .dolap{padding:16px 10px 6px;border-radius:20px 20px 12px 12px}
-  .katman{padding:14px 6px 0}
+  .dolap{padding:14px 10px 22px;gap:22px}
+  .katman{padding:12px 6px 0}
+  .raf2{min-height:0}
+  .patika{padding:40px 0 30px}
+  .patika::before{left:12px;right:12px;top:calc(40px + 50% - 35px)}
+  .dur{width:26px;height:26px}.dur svg{width:12px;height:12px}
+  .dur small{font-size:11px}
+  .dur.burada{width:42px;height:42px;font-size:20px;box-shadow:0 0 0 4px rgba(247,181,56,.28)}
+  .dur.final{width:38px;height:38px}.dur.final img{width:20px}
+  .etkinlik-kutu{padding:16px 12px 18px;border-radius:22px}
   .iki{grid-template-columns:1fr}
   .cubuk p{grid-template-columns:110px 1fr}
   .kpi b{font-size:26px}

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Caveat:wght@600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261113-oda3">
+<link rel="stylesheet" href="style.css?v=20261113-oda4">
 <!-- v2 "Okuma odası" (13.11.2026). Hero fikri @marina_uiux Storybook Shelf reel'inden (assets/ig_reels/Dfm1E3HI_yZ/analiz.md):
      oda sahnesi + 3D raf + tıklayınca açılan kitap. Sayfa gündüz odada başlar, damga bölümünde aynı odanın gecesine varır.
      Eski sürüm site_a/_eski/ altında. -->
@@ -113,19 +113,22 @@
     <div class="durak-kitap" id="durakKitap"><img id="durakKapak" src="img/covers/pinokyo.webp" alt=""></div>
     <div>
       <p class="ust-etiket">Bir durağın içinde</p>
-      <h2 id="durakBaslik"><span class="kitap-ad" data-kitap-ad>Pinokyo</span> ile bir durak <span>5 adım, 10–15 dakika</span></h2>
-      <p class="giris">Okuma öncesi, sırası ve sonrası. Öğretmenlerin bildiği model, çocukların seveceği oyunla. Etkinlikler seçtiğin kitaba göre değişir.</p>
+      <h2 id="durakBaslik"><span class="kitap-ad" data-kitap-ad>Pinokyo</span> patikası</h2>
+      <p class="giris">Kitap duraklara bölünür, duraklar sırayla açılır. Her durakta okuma öncesi, sırası ve sonrası için beş etkinlik var; hepsi seçtiğin kitaba göre.</p>
     </div>
   </div>
-  <ol class="etkinlik" id="etkinlik" aria-live="polite"></ol>
-  <p class="dipnot">Örnek durak. Etkinlikler tanıtım için hazırlanmıştır.</p>
+  <div class="patika" id="patika" role="img" aria-label="Patika durakları"></div>
+  <div class="etkinlik-kutu">
+    <p class="etkinlik-baslik"><b>1. durak</b> · bu durağın etkinlikleri</p>
+    <ol class="etkinlik" id="etkinlik" aria-live="polite"></ol>
+  </div>
 </section>
 
 <!-- 3. SEVİYE: büyük ahşap kitaplık, her rafta bir seviye -->
 <section class="bolum seviye" id="seviye" aria-labelledby="sevBaslik">
   <div class="ic-dar">
     <p class="ust-etiket">Seviyene göre kitaplar</p>
-    <h2 id="sevBaslik">Her rafta <span>başka bir macera.</span></h2>
+    <h2 id="sevBaslik">Her bölmede <span>başka bir macera.</span></h2>
     <p class="giris">Rafından bir kitap seç. Seçtiğin kitap yolculuğu, pasaportu ve belgeyi de değiştirir.</p>
   </div>
   <div class="dolap" id="dolap"></div>
@@ -235,6 +238,6 @@
   <p class="telif">© 2026 Okumino. Tüm hakları saklıdır.</p>
 </footer>
 
-<script src="app.js?v=20261113-oda3"></script>
+<script src="app.js?v=20261113-oda4"></script>
 </body>
 </html>

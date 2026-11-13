@@ -39,6 +39,20 @@
     bulut:['Bulutun taşıdığı mektup kime gidiyor olabilir?','Bulutun mektubu yakaladığı anı dinle.',['mektup','zarf','rüzgâr'],'Bulutun gökyüzündeki yolculuğunu izle.','Bir arkadaşına üç cümlelik bir mektup yaz.']
   };
   const ADIM = [['önce','Tahmin et','?'],['sırası','Dinle','img/mod_dinle.webp'],['sırası','Kelime oyunu','img/mod_oyna.webp'],['sırası','İzle','img/mod_izle.webp'],['sonra','Anla ve üret','img/mino_dedektif.webp']];
+  const KILIT = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 10V7.5a5 5 0 0 1 10 0V10h.5A1.5 1.5 0 0 1 19 11.5v8a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-8A1.5 1.5 0 0 1 6.5 10Zm2.2 0h5.6V7.5a2.8 2.8 0 0 0-5.6 0Z"/></svg>';
+  function patikaCiz(b, lv) {
+    const n = lv.durak, pk = $('#patika');
+    pk.setAttribute('aria-label', `${b.title} patikası: ${n} durak. 1. durak açık, diğerleri sırayla açılır, sonda final damgası.`);
+    pk.innerHTML = Array.from({ length: n }, (_, k) => k === 0
+      ? '<span class="dur burada">1<em>Buradasın</em><small>1. durak</small></span>'
+      : k === n - 1 ? '<span class="dur final"><img src="img/muhur.webp" alt=""><small>Final</small></span>'
+      : `<span class="dur">${KILIT}<small>${k + 1}</small></span>`).join('');
+    // etkinlik kutusunun oku 1. durağı göstersin
+    requestAnimationFrame(() => {
+      const d = $('.dur.burada', pk), kutu = $('.etkinlik-kutu');
+      kutu.style.setProperty('--ok', `${d.getBoundingClientRect().left + d.offsetWidth / 2 - kutu.getBoundingClientRect().left - 16}px`);
+    });
+  }
   function etkinlikCiz(b) {
     const e = ETK[b.id];
     $('#etkinlik').innerHTML = ADIM.map(([faz, ad, ik], k) => `<li style="--d:${k}"><div class="no2"><i>${k + 1}</i><small>${faz}</small></div>
@@ -64,7 +78,7 @@
   raf.innerHTML = BOOKS.map((b, i) => kitapHTML(b, i)).join('');
   /* dolap: her seviye bir raf */
   $('#dolap').innerHTML = Object.entries(LV).map(([k, v]) => `<div class="katman"><div class="raf2" role="group" aria-label="${v.ad} rafı, ${v.sinif}">
-      ${BOOKS.map((b, i) => LEVEL[b.id] === k ? kitapHTML(b, i, .85) : '').join('')}</div>
+      ${BOOKS.map((b, i) => LEVEL[b.id] === k ? kitapHTML(b, i, .72) : '').join('')}</div>
       <span class="levha">${v.ad} <small>· ${v.sinif}</small></span></div>`).join('');
 
   function sec(i) {
@@ -74,7 +88,7 @@
     // yolculuk
     $('#yolKapak').src = cover(b); $('#yolKapak').alt = `${b.title} kapağı`;
     $('#yolEl').textContent = `${b.title} yola çıktı`;
-    $('#durakKapak').src = cover(b); etkinlikCiz(b);
+    $('#durakKapak').src = cover(b); etkinlikCiz(b); patikaCiz(b, lv);
     $('#gezgin img').src = cover(b); setTimeout(() => gezYerlesim && gezYerlesim(), 760);
     $('#dinleNot').textContent = b.listen || `${b.title}: dinle, hayal et, keşfet.`;
     $('#oynaNot').textContent = b.play || 'Bu hikâyenin kelimeleriyle bulmacaları çöz.';
@@ -227,7 +241,7 @@
     const x = A.x + (B.x - A.x) * e + kavis * 80 * yon + (tw - w) / 2, yy = A.y + (B.y - A.y) * e - kavis * 30 + (th - h) / 2;
     gez.style.width = w + 'px'; gez.style.height = h + 'px';
     gez.style.transform = `translate3d(${x}px,${yy}px,0) rotate(${kavis * 10 * yon + (son ? e * -12 : 0)}deg)`;
-    gez.style.opacity = son ? 1 - smooth(.8, .98, e) : 1;
+    gez.style.opacity = son ? Math.min(1, 1 - smooth(.06, .2, e) + smooth(.62, .76, e)) * (1 - smooth(.86, .98, e)) : 1;
     const rafta = y <= 4 || okuyor;
     gez.style.visibility = rafta ? 'hidden' : 'visible';
     document.body.classList.toggle('gezgin-yolda', !rafta);
