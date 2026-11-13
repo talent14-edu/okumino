@@ -467,3 +467,62 @@ dialog.oyun::backdrop{background:rgba(42,18,28,.6);backdrop-filter:blur(3px)}
   .final-damga{right:4%;width:90px}
   .dinle-metin{font-size:18px}
 }
+
+/* ─── durak oynatıcısı: her adım kaydırmadan sığsın (Okumino + Readmino) ─── */
+dialog.oyun{max-height:min(94vh,860px)}
+.oyun-ust{padding:12px 18px 10px}
+.oyun-kapak{width:38px}
+.oyun-govde{padding:clamp(12px,2.2vh,22px) clamp(16px,3vw,34px) 10px}
+.oyun-faz{font-size:19px}
+.oyun-faz b{width:26px;height:26px;font-size:14px}
+.oyun-govde h3{margin-top:4px;font-size:clamp(24px,3.4vh,30px)}
+.oyun-alt-yazi{font-size:15px;line-height:1.4}
+.oyun-alt{padding:10px 18px}
+.oyun-soru{margin-top:clamp(8px,1.6vh,16px);font-size:clamp(17px,2.3vh,20px)}
+.secenek{margin-top:10px;gap:8px}
+.secenek button,.eslestir button{min-height:clamp(42px,6vh,52px);padding:8px 12px;font-size:15px}
+.geri-bildirim{min-height:22px;margin-top:8px;font-size:15px}
+/* 1 tahmin: kapak solda, soru ve seçenekler sağda */
+.oyun-buyuk-kapak{width:auto;height:clamp(150px,30vh,260px);aspect-ratio:2/3;object-fit:cover;margin:12px auto 0}
+@media (min-width:700px){
+  .oyun-govde.a0{display:grid;grid-template-columns:auto 1fr;column-gap:26px;align-content:start}
+  .oyun-govde.a0 > .oyun-faz,.oyun-govde.a0 > h3,.oyun-govde.a0 > .oyun-alt-yazi{grid-column:1 / -1}
+  .oyun-govde.a0 > .oyun-buyuk-kapak{grid-column:1;grid-row:4 / span 3;margin:14px 0 0}
+  .oyun-govde.a0 > .oyun-soru{grid-column:2;text-align:left;margin-top:14px;align-self:end}
+  .oyun-govde.a0 > .secenek{grid-column:2;grid-template-columns:1fr;align-self:start}
+  .oyun-govde.a0 > .geri-bildirim{grid-column:2;text-align:left}
+}
+/* 2 dinle */
+.dinle-btn{margin-top:10px;padding:10px 18px;font-size:16px}
+.dinle-metin{margin-top:10px;padding:14px 18px;font-size:clamp(15px,2.2vh,18px);line-height:1.6}
+/* 3 kelime */
+.eslestir{margin-top:12px;gap:12px}
+.sutun{gap:8px}
+.eslestir .kel{font-size:18px}
+/* 4 izle: sahne ekran yüksekliğine göre */
+.sahne-ekran{margin:12px auto 0;width:min(100%,calc(44vh * 16 / 9));aspect-ratio:16/9}
+/* 5 anla ve üret */
+.uret{margin-top:10px;gap:6px;font-size:17px}
+.uret textarea{padding:10px 14px;font-size:16px}
+.uret textarea[rows]{height:clamp(64px,10vh,96px)}
+/* final */
+.final-ekran{padding:0}
+.final-mino{width:clamp(90px,16vh,140px)}
+.final-ekran h3{font-size:clamp(22px,3.2vh,28px);margin-top:8px}
+.final-damga{width:clamp(80px,13vh,110px)}
+@media (max-width:640px){
+  .oyun-ilerleme li.simdi span{display:none}
+  .oyun-buyuk-kapak{height:clamp(120px,22vh,200px)}
+  .secenek button{min-height:44px}
+  .dinle-metin{font-size:15px;line-height:1.5}
+  .sahne-ekran{width:100%}
+}
+@media (max-width:640px) and (max-height:720px){
+  .oyun-alt-yazi{display:none}
+  .oyun-buyuk-kapak{height:15vh;margin-top:8px}
+  .oyun-soru{margin-top:8px;font-size:16px}
+  .secenek button{min-height:40px;padding:6px 10px;font-size:14px}
+  .uret{font-size:15px}
+  .uret textarea[rows]{height:52px}
+  .uret small{display:none}
+}

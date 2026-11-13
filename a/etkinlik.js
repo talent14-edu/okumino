@@ -120,6 +120,7 @@
   function ciz() {
     speechSynthesis && speechSynthesis.cancel();
     ilerlemeCiz();
+    govde.className = 'oyun-govde a' + adim;   // adıma göre yerleşim (kaydırmasız sığması için)
     geri.hidden = adim === 0 || adim === 5;
     ileri.textContent = adim === 4 ? 'Durağı bitir ✓' : adim === 5 ? 'Kitaplığa dön' : 'İleri →';
     ileri.disabled = adim < 5 && !durum.tamam.has(adim);
