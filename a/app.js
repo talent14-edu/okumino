@@ -31,7 +31,7 @@
     heidi:['Dağın tepesindeki kulübede kim yaşıyor olabilir?','Heidi’nin dedesinin yanına geldiği günü dinle.',['otlak','kulübe','keçi'],'Heidi’nin samanlıktaki yatağını izle.','Dede önce neden sessizdi? Tek cümleyle anlat.'],
     alice:['Ceketli, saatli bir tavşan nereye koşuyor olabilir?','Alice’in tavşan deliğinden aşağı düşüşünü dinle.',['delik','anahtar','şişe'],'Alice’in küçülüp büyüdüğü sahneyi izle.','Sen küçülseydin odanda neler görürdün? Üçünü çiz.'],
     oz:['Kasırga Dorothy’nin evini nereye götürecek?','Kasırgayı ve Munchkin ülkesine varışı dinle.',['kasırga','gümüş ayakkabı','sarı tuğla'],'Evin havalandığı sahneyi izle.','Dorothy yanına üç eşya alsa hangilerini seçerdin? Nedenini söyle.'],
-    'beyaz-dis':['Karda küçük bir kurt yavrusu… Onu neler bekliyor?','Yavrunun ininden ilk kez çıktığı günü dinle.',['in','iz','sürü'],'Yavrunun dünyayı ilk kez gördüğü sahneyi izle.','Yavru ilk gün neler öğrendi? Olayları sırala.'],
+    'beyaz-dis':['İnde doğan kurt yavrusu dışarıda ilk ne öğrenecek?','Yavrunun ininden ilk kez çıktığı günü dinle.',['in','iz','sürü'],'Yavrunun dünyayı ilk kez gördüğü sahneyi izle.','Yavru ilk gün neler öğrendi? Olayları sırala.'],
     define:['Yaşlı kaptanın sandığında ne saklı olabilir?','Amiral Benbow Hanı’na gelen yaşlı denizciyi dinle.',['han','sandık','harita'],'Haritanın bulunduğu sahneyi izle.','Kendi define haritanı çiz: üç işaret, bir çarpı.'],
     pollyanna:['“Mutluluk oyunu” nasıl oynanıyor olabilir?','Pollyanna’nın teyzesinin evine geldiği günü dinle.',['tavan arası','teyze','oyun'],'Pollyanna’nın tavan arasındaki odasını izle.','Bugün sevindiğin bir şeyi bul, Pollyanna gibi anlat.'],
     mino:['Gece parlayan tohumdan ne çıkacak?','Mino’nun tohumu bulduğu geceyi dinle.',['tohum','filiz','ışık'],'Tohumun ilk filizini izle.','Tohum büyüsün diye Mino’ya üç öneri ver.'],
@@ -55,9 +55,9 @@
   }
   function etkinlikCiz(b) {
     const e = ETK[b.id];
-    $('#etkinlik').innerHTML = ADIM.map(([faz, ad, ik], k) => `<li style="--d:${k}"><div class="no2"><i>${k + 1}</i><small>${faz}</small></div>
+    $('#etkinlik').innerHTML = ADIM.map(([faz, ad, ik], k) => `<li style="--d:${k}"><button class="kart-oyna" type="button" data-adim="${k}" aria-label="${ad} etkinliğini oyna"></button><div class="no2"><i>${k + 1}</i><small>${faz}</small></div>
       ${ik === '?' ? '<span class="tahmin-ikon" aria-hidden="true">?</span>' : `<img src="${ik}" alt="">`}<b>${ad}</b>
-      ${k === 2 ? `<p>Hikâyeden üç kelime. Her birini resmiyle eşleştir.</p><div class="kelimeler">${e[2].map(w => `<span>${w}</span>`).join('')}</div>` : `<p>${e[k]}</p>`}</li>`).join('');
+      <span class="oyna-etiket" aria-hidden="true">Oyna ▶</span>${k === 2 ? `<p>Hikâyeden üç kelime. Her birini anlamıyla eşleştir.</p><div class="kelimeler">${e[2].map(w => `<span>${w}</span>`).join('')}</div>` : `<p>${e[k]}</p>`}</li>`).join('');
   }
   let secili = 0, gezYerlesim = null;
 
@@ -202,6 +202,16 @@
 
   /* form (henüz arka uç yok) */
   $('#form').addEventListener('submit', e => { e.preventDefault(); $('.tamam', e.target).hidden = false; $('button[type=submit]', e.target).hidden = true; });
+
+  /* durak oynatıcısı (etkinlik.js) */
+  $('#etkinlik').addEventListener('click', e => { const b = e.target.closest('[data-adim]'); if (b && window.OkuminoDurak) OkuminoDurak.ac(BOOKS[secili], +b.dataset.adim); });
+  $('#durakOyna').addEventListener('click', () => window.OkuminoDurak && OkuminoDurak.ac(BOOKS[secili], 0));
+  document.addEventListener('okumino:durak-bitti', e => {
+    if (e.detail.id !== BOOKS[secili].id) return;
+    const d = $$('#patika .dur')[1]; if (!d || d.classList.contains('final')) return;
+    d.classList.add('acildi'); d.innerHTML = '2<small>2. durak açıldı</small>';
+    $('#patika .dur.burada').classList.add('bitti');
+  });
 
   sec(0);
 
