@@ -3,7 +3,7 @@
    Renkler Mino'dan ve logodan: mercan, bal, ahududu, erik; kitap sırtlarında canlı tonlar. */
 :root{
   --cream:#FFF5EA; --paper:#FFF9F0; --butter:#FFE3C8; --sun:#F7B538; --coral:#C9431A; --coral-d:#A8360F;
-  --plum:#46202F; --plum-d:#2A121C; --berry:#B8325A; --text:#5B4049; --sand:#F0D8C0; --mute:#8A6A72;
+  --plum:#46202F; --plum-d:#2A121C; --berry:#B8325A; --text:#5B4049; --sand:#F0D8C0; --mute:#76545E;
   --wood:#9A5B2E; --wood-d:#6E3D1C; --wood-l:#C88A52; --night:#1B1430;
   --head:'Baloo 2',sans-serif; --body:'Nunito',sans-serif; --hand:'Caveat',cursive;
 }
@@ -21,7 +21,7 @@ h1,h2,h3{font-family:var(--head);color:var(--plum);line-height:1.06;letter-spaci
   font:800 17px var(--body);text-decoration:none;box-shadow:0 5px 0 var(--coral-d);transition:transform .15s,box-shadow .15s}
 .btn:hover{transform:translateY(2px);box-shadow:0 3px 0 var(--coral-d);color:#fff}
 .btn-sm{min-height:44px;padding:0 18px;font-size:15px}
-.ust-etiket{display:inline-block;padding:7px 16px;border-radius:99px;background:var(--butter);color:var(--coral);font:800 14px/1 var(--body);letter-spacing:.03em;margin-bottom:16px}
+.ust-etiket{display:inline-block;padding:7px 16px;border-radius:99px;background:var(--butter);color:var(--coral-d);font:800 14px/1 var(--body);letter-spacing:.03em;margin-bottom:16px}
 .bolum h2{font-size:clamp(34px,4.4vw,58px);font-weight:800}
 .bolum h2 span{color:var(--coral)}
 .giris{font-size:19px;max-width:640px;margin:16px auto 0}
@@ -127,7 +127,7 @@ h1,h2,h3{font-family:var(--head);color:var(--plum);line-height:1.06;letter-spaci
 .yollar div{text-align:center}
 .yollar img{width:78%;margin:0 auto;aspect-ratio:800/680;object-fit:contain}
 .yollar b{display:block;margin-top:2px;font:800 clamp(14px,1.3vw,18px)/1.1 var(--head);color:var(--plum)}
-.no{position:absolute;bottom:4%;font:700 12px var(--body);color:#B99}
+.no{position:absolute;bottom:4%;font:700 12px var(--body);color:#8E6E76}
 .ic .no{left:7%;color:#fff9;z-index:2}.sag .no{right:7%}
 .kart{position:relative;flex:none;width:min(380px,30vw);padding:30px 30px 28px;border-radius:26px;background:var(--cream);box-shadow:0 30px 60px -24px rgba(0,0,0,.6);
   transform:translateX(60px);opacity:0;transition:transform .6s cubic-bezier(.3,1.2,.4,1) .35s,opacity .4s .35s}
