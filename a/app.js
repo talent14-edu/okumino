@@ -16,7 +16,7 @@
     { id:'kelimeler', title:'Kayıp Kelimeler Ormanı', author:'Okumino', original:true, desc:'Kelimeler birer birer kayboluyor! Ormanın sesini geri getirebilir misin?' },
     { id:'bulut', title:'Bulut Postacısı', author:'Okumino', original:true, desc:'Gökyüzünde teslim edilmeyi bekleyen bir mektup ve yepyeni dostluklar.' }
   ];
-  // tanıtım seçkisi: seviye eşlemesi ve durak sayıları (bir durak = 6 adım)
+  // tanıtım seçkisi: seviye eşlemesi ve durak sayıları (bir durak = 5 adım; sesli okuma yok)
   const LEVEL = { heidi:'minik', mino:'minik', bulut:'minik', pinokyo:'kasif', alice:'kasif', oz:'kasif', pollyanna:'kasif', 'beyaz-dis':'usta', define:'usta', kelimeler:'usta' };
   const LV = { minik:{ ad:'Minik', sinif:'1–2. sınıf', durak:6 }, kasif:{ ad:'Kâşif', sinif:'3–5. sınıf', durak:8 }, usta:{ ad:'Usta', sinif:'6–8. sınıf', durak:10 } };
   const OPENING = { pinokyo:'Bir varmış, bir yokmuş…', heidi:'Dağın tepesinde bir kulübe…', alice:'Tavşan deliğinden aşağı…', oz:'Bir kasırga esti…', 'beyaz-dis':'Karlı ormanda bir iz…',
@@ -25,7 +25,27 @@
   const C = ['#E2552B','#2F5FD0','#F2B233','#1F9C8A','#C23C6B','#5C9A3E','#7B4FB8','#F08A24','#3E9BD6','#B8442E'];
   const H = [330,300,352,318,340,306,326,356,312,338], T = [44,38,50,40,46,36,42,52,38,46];
   const cover = b => `img/covers/${b.id}.webp`;
-  let secili = 0;
+  /* Bir durağın beş etkinliği, kitaba göre: [tahmin, dinle, kelimeler, izle, anla ve üret]. Tanıtım örneği. */
+  const ETK = {
+    pinokyo:['Konuşan bir odun parçası… Ustanın elinde neye dönüşecek?','Gepetto Usta’nın kuklayı yonttuğu günü dinle.',['usta','yontmak','kukla'],'Pinokyo’nun ilk adımlarını izle.','Pinokyo’ya evden çıkmadan önce uyacağı bir kural yaz.'],
+    heidi:['Dağın tepesindeki kulübede kim yaşıyor olabilir?','Heidi’nin dedesinin yanına geldiği günü dinle.',['otlak','kulübe','keçi'],'Heidi’nin samanlıktaki yatağını izle.','Dede önce neden sessizdi? Tek cümleyle anlat.'],
+    alice:['Ceketli, saatli bir tavşan nereye koşuyor olabilir?','Alice’in tavşan deliğinden aşağı düşüşünü dinle.',['delik','anahtar','şişe'],'Alice’in küçülüp büyüdüğü sahneyi izle.','Sen küçülseydin odanda neler görürdün? Üçünü çiz.'],
+    oz:['Kasırga Dorothy’nin evini nereye götürecek?','Kasırgayı ve Munchkin ülkesine varışı dinle.',['kasırga','gümüş ayakkabı','sarı tuğla'],'Evin havalandığı sahneyi izle.','Dorothy yanına üç eşya alsa hangilerini seçerdin? Nedenini söyle.'],
+    'beyaz-dis':['Karda küçük bir kurt yavrusu… Onu neler bekliyor?','Yavrunun ininden ilk kez çıktığı günü dinle.',['in','iz','sürü'],'Yavrunun dünyayı ilk kez gördüğü sahneyi izle.','Yavru ilk gün neler öğrendi? Olayları sırala.'],
+    define:['Yaşlı kaptanın sandığında ne saklı olabilir?','Amiral Benbow Hanı’na gelen yaşlı denizciyi dinle.',['han','sandık','harita'],'Haritanın bulunduğu sahneyi izle.','Kendi define haritanı çiz: üç işaret, bir çarpı.'],
+    pollyanna:['“Mutluluk oyunu” nasıl oynanıyor olabilir?','Pollyanna’nın teyzesinin evine geldiği günü dinle.',['tavan arası','teyze','oyun'],'Pollyanna’nın tavan arasındaki odasını izle.','Bugün sevindiğin bir şeyi bul, Pollyanna gibi anlat.'],
+    mino:['Gece parlayan tohumdan ne çıkacak?','Mino’nun tohumu bulduğu geceyi dinle.',['tohum','filiz','ışık'],'Tohumun ilk filizini izle.','Tohum büyüsün diye Mino’ya üç öneri ver.'],
+    kelimeler:['Orman neden birden sessizleşmiş olabilir?','Kuşların şarkısının kaybolduğu sabahı dinle.',['yankı','fısıltı','şarkı'],'Kelimelerin uçup gittiği sahneyi izle.','Ormana geri getirmek istediğin üç kelimeyi seç.'],
+    bulut:['Bulutun taşıdığı mektup kime gidiyor olabilir?','Bulutun mektubu yakaladığı anı dinle.',['mektup','zarf','rüzgâr'],'Bulutun gökyüzündeki yolculuğunu izle.','Bir arkadaşına üç cümlelik bir mektup yaz.']
+  };
+  const ADIM = [['önce','Tahmin et','?'],['sırası','Dinle','img/mod_dinle.webp'],['sırası','Kelime oyunu','img/mod_oyna.webp'],['sırası','İzle','img/mod_izle.webp'],['sonra','Anla ve üret','img/mino_dedektif.webp']];
+  function etkinlikCiz(b) {
+    const e = ETK[b.id];
+    $('#etkinlik').innerHTML = ADIM.map(([faz, ad, ik], k) => `<li style="--d:${k}"><div class="no2"><i>${k + 1}</i><small>${faz}</small></div>
+      ${ik === '?' ? '<span class="tahmin-ikon" aria-hidden="true">?</span>' : `<img src="${ik}" alt="">`}<b>${ad}</b>
+      ${k === 2 ? `<p>Hikâyeden üç kelime. Her birini resmiyle eşleştir.</p><div class="kelimeler">${e[2].map(w => `<span>${w}</span>`).join('')}</div>` : `<p>${e[k]}</p>`}</li>`).join('');
+  }
+  let secili = 0, gezYerlesim = null;
 
   /* 3D kitap; k ölçek (dolap için küçük) */
   function kitapHTML(b, i, k = 1) {
@@ -53,7 +73,9 @@
     $$('.kitap').forEach(k => { const on = +k.dataset.i === i; k.classList.toggle('secili', on); k.setAttribute('aria-pressed', String(on)); });
     // yolculuk
     $('#yolKapak').src = cover(b); $('#yolKapak').alt = `${b.title} kapağı`;
-    $('#yolEl').textContent = `${b.title} · 1. durak`;
+    $('#yolEl').textContent = `${b.title} yola çıktı`;
+    $('#durakKapak').src = cover(b); etkinlikCiz(b);
+    $('#gezgin img').src = cover(b); setTimeout(() => gezYerlesim && gezYerlesim(), 760);
     $('#dinleNot').textContent = b.listen || `${b.title}: dinle, hayal et, keşfet.`;
     $('#oynaNot').textContent = b.play || 'Bu hikâyenin kelimeleriyle bulmacaları çöz.';
     // dolap altı
@@ -61,7 +83,7 @@
     // damga + belge + panel
     const d = $('#damgaAd'); d.textContent = b.title.toLocaleUpperCase('tr-TR'); d.setAttribute('textLength', '76'); d.setAttribute('lengthAdjust', 'spacingAndGlyphs');
     $('#belgeGovde').innerHTML = `<b>${b.title}</b> eserini okuyup tüm durakları başarıyla tamamladı.`;
-    $('#belgeDurak').innerHTML = `<b>${lv.durak}</b> durak`; $('#belgeAdim').innerHTML = `<b>${lv.durak * 6}</b> adım`;
+    $('#belgeDurak').innerHTML = `<b>${lv.durak}</b> durak`; $('#belgeAdim').innerHTML = `<b>${lv.durak * 5}</b> adım`;
     $('#kpiDurak').textContent = `/ ${lv.durak}`;
     $$('[data-kitap-ad]').forEach(el => { el.textContent = b.title; });
   }
@@ -132,9 +154,9 @@
 
   /* görünce oynat: yol kartları, panel çubukları, damga */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('gorundu'); io.unobserve(e.target); } }), { threshold: .25 });
-  $$('.yolculuk, .sinif').forEach(el => io.observe(el));
+  $$('.yolculuk, .durak-bolum, .sinif').forEach(el => io.observe(el));
   const damgaIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('damgalandi'); damgaIO.unobserve(e.target); } }), { threshold: .6 });
-  damgaIO.observe($('#pasaportAlan'));
+  if (reduce) damgaIO.observe($('#pasaportAlan'));   // hareket açıkken damgayı gezgin kitap basar
 
   /* belge */
   const adGir = $('#adGir'), belgeAd = $('#belgeAd');
@@ -152,7 +174,6 @@
   const SSS = [
     ['Okumino hangi yaş grubu için?', '1–8. sınıf öğrencileri için. Minik (1–2), Kâşif (3–5) ve Usta (6–8) seviyelerinin her birinde farklı kitaplar yer alır; çocuk seviyesine uygun eserler arasından seçer.'],
     ['Eserler telifli mi?', 'Patikalar iki tür eserden oluşur: telif süresi dolmuş (kamu malı) sevilen eserler ve Okumino ekibinin yazdığı özgün hikâyeler. Uyarlamalar, seslendirmeler ve görseller de Okumino ekibi tarafından özgün olarak hazırlanır.'],
-    ['Öğrencinin ses kaydı ne oluyor?', 'Sesli okuma kayıtları yalnızca akıcılık puanını hesaplamak için kullanılır ve puanlamadan sonra silinir. Kayıt için veli onayı alınır.'],
     ['Müfredatla bağlantısı var mı?', 'Var, ama çocuğun karşısına çıkmaz. Her adım arka planda Türkçe dersi kazanımları ve okuma becerileriyle eşleştirilir; öğretmen raporlarında bu eşleşme görünür.'],
     ['Hangi cihazlarda çalışır?', 'Tablet, telefon ve bilgisayarda tarayıcı üzerinden çalışır. Sınıf tahtasında ortak okuma için de kullanılabilir.'],
     ['Okuma belgesi nasıl kazanılır?', 'Patikadaki tüm duraklar tamamlanıp final aşamasında başarı eşiği geçildiğinde, öğrencinin adının yazdığı ve QR kodla doğrulanabilen belge oluşturulur.']
@@ -169,4 +190,58 @@
   $('#form').addEventListener('submit', e => { e.preventDefault(); $('.tamam', e.target).hidden = false; $('button[type=submit]', e.target).hidden = true; });
 
   sec(0);
+
+  /* Gezgin kitap: seçilen kitap kaydırdıkça raftan masaya, durağa ve pasaporta gider; sonunda damga olur.
+     Konum kaydırmaya bağlı (bir kez tetiklenen animasyon değil); sy, scrollY'nin yumuşatılmış kopyası. */
+  if (reduce) return;
+  document.documentElement.classList.add('js-gez');
+  const gez = $('#gezgin');
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const sine = t => .5 - Math.cos(Math.PI * t) / 2;
+  let duraklar = [], sy = scrollY, kare = 0;
+  gezYerlesim = function () {
+    const hedef = [$(`.raf .kitap[data-i="${secili}"] .on`), $('#yolKitap'), $('#durakKitap'), $('#damgaHedef')];
+    const vh = innerHeight;
+    duraklar = hedef.map((el, k) => {
+      let r = el.getBoundingClientRect();
+      // damga basılmadan önce scale(2.4) ile büyük durur; ölçüyü dönüşümsüz kutudan al
+      if (k === 3) { const p = el.parentElement.getBoundingClientRect(); r = { left: p.left + el.offsetLeft, top: p.top + el.offsetTop, width: el.offsetWidth, height: el.offsetHeight }; }
+      const x = r.left + scrollX, y = r.top + scrollY;
+      return { x, y, w: r.width, h: k === 3 ? r.width * 1.5 : r.height, at: k === 0 ? 0 : Math.max(0, y + r.height / 2 - vh / 2) };
+    });
+    duraklar[3].y -= duraklar[3].w * .25;
+    ciz();
+  };
+  function ciz() {
+    if (!duraklar.length) return;
+    const y = sy, okuyor = oda.classList.contains('okuyor');
+    let i = 0;
+    while (i < duraklar.length - 2 && y >= duraklar[i + 1].at) i++;
+    const A = duraklar[i], B = duraklar[i + 1];
+    const e = sine(smooth(.06, .94, clamp((y - A.at) / Math.max(1, B.at - A.at))));
+    const yon = i % 2 ? -1 : 1, kavis = Math.sin(Math.PI * e);
+    const son = i === duraklar.length - 2;
+    const tw = A.w + (B.w - A.w) * e, th = A.h + (B.h - A.h) * e;
+    const olc = son ? 1 - .7 * smooth(.55, 1, e) : 1, w = tw * olc, h = th * olc;
+    const x = A.x + (B.x - A.x) * e + kavis * 80 * yon + (tw - w) / 2, yy = A.y + (B.y - A.y) * e - kavis * 30 + (th - h) / 2;
+    gez.style.width = w + 'px'; gez.style.height = h + 'px';
+    gez.style.transform = `translate3d(${x}px,${yy}px,0) rotate(${kavis * 10 * yon + (son ? e * -12 : 0)}deg)`;
+    gez.style.opacity = son ? 1 - smooth(.8, .98, e) : 1;
+    const rafta = y <= 4 || okuyor;
+    gez.style.visibility = rafta ? 'hidden' : 'visible';
+    document.body.classList.toggle('gezgin-yolda', !rafta);
+    if (son && e > .95) $('#pasaportAlan').classList.add('damgalandi');
+  }
+  function dongu() {
+    const d = scrollY - sy;
+    sy = Math.abs(d) < .4 ? scrollY : sy + d * .22;
+    ciz();
+    kare = Math.abs(scrollY - sy) > .4 ? requestAnimationFrame(dongu) : 0;
+  }
+  addEventListener('scroll', () => { if (!kare) kare = requestAnimationFrame(dongu); }, { passive: true });
+  addEventListener('resize', gezYerlesim);
+  addEventListener('load', gezYerlesim);
+  document.fonts && document.fonts.ready.then(gezYerlesim);
+  setTimeout(gezYerlesim, 800);
 })();
