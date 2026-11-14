@@ -6,14 +6,14 @@
   const L = {
     global: 'OkuminoDurak', olay: 'okumino:durak-bitti',
     lang: 'tr', ses: /^tr/i, sesKod: 'tr-TR',
-    adim: ['Tahmin et', 'Dinle', 'Oku', 'Kelime oyunu', 'İzle', 'Anla ve üret'],
-    faz: ['önce', 'sırası', 'sırası', 'sırası', 'sırası', 'sonra'],
+    adim: ['Tahmin et', 'Dinle ve oku', 'Kelime oyunu', 'İzle', 'Anla ve üret'],
+    faz: ['önce', 'sırası', 'sırası', 'sırası', 'sonra'],
     durak: t => `${t} · 1. durak`, adimEtiket: (i, a, ok) => `${i}. adım: ${a}${ok ? ', tamamlandı' : ''}`,
     ileri: 'İleri →', bitir: 'Durağı bitir ✓', don: 'Kitaplığa dön', geri: '← Geri', kapat: 'Kapat', adimlar: 'Adımlar',
     kapak: t => `${t} kapağı`,
     tahminAlt: 'Kapağa bak. Sence ne olacak? Yanlış tahmin yok, dinleyince göreceğiz.',
     tahminOk: 'Tahminini not ettim! Şimdi dinleyip kontrol edelim.',
-    dinleAlt: 'Hikâyeyi dinle. Duyduğun kelime yazıda parlar.', dinleBtn: 'Dinle', tekrarDinle: 'Tekrar dinle',
+    dinleAlt: 'Hikâyeyi dinle. Duyduğun kelime yazıda parlar.', dinleBtn: 'Dinle', durdur: 'Durdur', tekrarDinle: 'Tekrar dinle',
     cevap: c => `Cevap: ${c}.`, dogruTahmin: c => `Tahminin doğru çıktı: ${c}!`, farkliTahmin: c => `Hikâyede şöyle oldu: ${c}. Tahmin etmek de okumanın parçası.`,
     okuAlt: 'Şimdi sıra sende: sayfaları kendi hızında, içinden oku. Bir cümleye dokunursan parmağınla takip eder gibi parlar.',
     sayfa: (i, n) => `Sayfa ${i} / ${n}`, cevir: 'Sayfayı çevir', onceki: 'Önceki sayfa', okuBitti: 'Bütün sayfaları okudun. Harika!',
@@ -112,7 +112,7 @@
   const EK = {
     pinokyo: {
       dir: 'img/pinokyo/',
-      gorsel: ['p1', 'p2', null, 'p3', null, 'p4', 'p6'],   // adım başına sol panel (null: adım kendi görselini taşır)
+      gorsel: ['p1', null, 'p3', null, 'p4', 'p6'],   // adım başına sol panel (null: adım kendi görselini taşır)
       oku: [
         ['p1', 'Kiraz Usta’nın atölyesinde sıradan bir odun parçası vardı. Usta baltasını kaldırdı: “Bundan güzel bir masa ayağı yaparım.” Tam o sırada incecik bir ses duyuldu: “Bana sakın sert vurma!”'],
         ['p2', 'Korkan Kiraz Usta odunu arkadaşı Gepetto’ya verdi. Gepetto bir kukla yapmak istiyordu. Oydu, yonttu; önce saçlar, sonra alın, sonra gözler çıktı ortaya. Gözler kıpırdadı ve ona baktı!'],
@@ -121,6 +121,7 @@
         ['p5', 'O akşam Pinokyo evde yalnızdı. Duvardaki rafta küçük bir çekirge belirdi. “Söz dinleyen çocuk yolunu kaybetmez,” dedi. Pinokyo bu öğüdü pek beğenmedi.'],
         ['p6', 'Ertesi sabah Gepetto ceketini satıp Pinokyo’ya bir alfabe kitabı aldı. Pinokyo kitabını sıkıca tuttu. “Bugün okula gideceğim, çok şey öğreneceğim!” dedi ve yola düştü.']
       ],
+      ses: { dir: 'ses/', k: [["s1.mp3",[0.0,0.56,0.88,1.08,1.84,2.84,2.98,3.28,3.74,4.76,5.12,5.66,6.88,7.24,7.56,7.82,8.24,9.64,9.84,9.98,10.32,11.04,11.14,11.3,12.58,12.76,13.12,13.36]],["s2.mp3",[0.12,0.58,0.78,1.5,1.72,2.36,2.82,2.98,4.06,4.48,4.66,5.1,5.44,6.68,8.6,8.78,9.78,10.0,10.76,11.02,11.54,11.72,12.9,13.4,13.94,14.1,14.36]],["s3.mp3",[0.12,0.62,0.98,1.08,1.54,1.86,2.86,3.14,3.62,4.72,5.2,5.34,5.64,6.2,6.5,7.66,8.06,8.94,9.14,9.36,9.62]],["s4.mp3",[0.12,0.66,0.88,1.44,1.68,2.4,3.0,3.3,3.72,4.18,5.32,5.68,6.12,6.44,7.0,8.24,8.98,9.72]],["s5.mp3",[0.12,0.24,0.56,1.08,1.42,2.56,3.12,3.46,3.98,4.28,4.74,5.74,6.04,6.4,6.56,6.96,7.98,8.9,9.36,9.52,9.98,10.14]],["s6.mp3",[0.12,0.54,0.94,1.44,1.96,2.36,3.04,3.1,3.2,3.5,3.92,4.78,5.26,6.18,7.3,7.54,7.82,8.54,8.66,8.86,9.44,9.64,10.32,10.58]]] },   // sayfa sesi + ekrandaki kelimelerin başlangıç saniyesi
       izle: {
         webp: 'izle.webp', mp4: 'izle.mp4?v=vo1', poster: 'izle_poster.webp',
         alt: [[0.6, 7.6, 'Kiraz Usta’nın atölyesinde sıradan bir odun parçası vardı. Ama bu odun… konuşuyordu!'], [8.1, 14.4, 'Odunu dostu Gepetto aldı. Oydu, yonttu… ve kuklanın gözleri açıldı.'], [15.6, 21.6, 'Adını Pinokyo koydu. Pinokyo ilk adımını attı. Sonra bir tane daha…'], [23.1, 27.8, 'Pinokyo daha yürümeyi yeni öğrenmişti ki kapıdan fırlayıp sokağa kaçtı!'], [30.3, 36.5, 'O akşam küçük çekirge ona bir öğüt verdi: “Söz dinleyen çocuk yolunu kaybetmez.”'], [37.5, 43.6, 'Gepetto ceketini satıp ona bir alfabe kitabı aldı. Ve Pinokyo okul yoluna düştü.']]
@@ -129,7 +130,7 @@
   };
 /*</dil>*/
   /* Ortak kod (Okumino ve Readmino aynı): yukarıdaki dil bloğu dışında iki sitede birebir aynı tutulur. */
-  const SON = 5;   // son etkinlik adımı; SON + 1 final ekranı
+  const SON = 4;   // son etkinlik adımı; SON + 1 final ekranı
   const $ = (s, r = document) => r.querySelector(s);
   const karistir = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(v => v[1]);
   const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -153,7 +154,7 @@
     $('#oyunBaslik', dlg).textContent = L.durak(k.title);
     ciz(); dlg.showModal();
   }
-  function sustur() { window.speechSynthesis && speechSynthesis.cancel(); dlg.querySelectorAll('video').forEach(v => v.pause()); }
+  function sustur() { calan = false; sesA.pause(); window.speechSynthesis && speechSynthesis.cancel(); dlg.querySelectorAll('video').forEach(v => v.pause()); }
   function kapat() { sustur(); dlg.close(); }
   $('.oyun-kapat', dlg).addEventListener('click', kapat);
   dlg.addEventListener('cancel', sustur);
@@ -169,7 +170,7 @@
   /* sol panel: kitabın sahnesi (varsa), yoksa kapak; tahmin adımında kapak öne çıkar */
   function gorselCiz() {
     const ad = ek && ek.gorsel ? ek.gorsel[adim] : undefined;
-    const tamEkran = adim === 2 || (adim === 4 && ek && ek.izle);   // oku ve videolu izle görselini kendi taşır
+    const tamEkran = adim === 1 || (adim === 3 && ek && ek.izle);   // dinle ve oku ve videolu izle görselini kendi taşır
     dlg.classList.toggle('genis', tamEkran);
     if (tamEkran) return;
     const sahne = ad ? ek.dir + ad + '.webp' : null;
@@ -186,7 +187,7 @@
     geri.hidden = adim === 0 || adim > SON;
     ileri.textContent = adim === SON ? L.bitir : adim > SON ? L.don : L.ileri;
     ileri.disabled = adim <= SON && !durum.tamam.has(adim);
-    [tahmin, dinle, oku, kelime, izle, anla, final][adim]();
+    [tahmin, dinleOku, kelime, izle, anla, final][adim]();
     govde.scrollTop = 0;
     const h = govde.querySelector('h3'); h && h.focus({ preventScroll: true });
   }
@@ -209,67 +210,87 @@
     if (durum.tahmin != null) govde.querySelector(`.secenek button[data-i="${durum.tahmin}"]`).classList.add('secili');
   }
 
-  function dinle() {
-    govde.innerHTML = baslik(1, L.dinleAlt);
-    const kelimeler = veri.metin.split(' ');
-    govde.insertAdjacentHTML('beforeend', `<button class="dinle-btn" type="button"><span aria-hidden="true">▶</span> ${L.dinleBtn}</button>
-      <p class="dinle-metin">${kelimeler.map((w, i) => `<span data-w="${i}">${esc(w)}</span>`).join(' ')}</p><p class="geri-bildirim" role="status"></p>`);
-    const btn = $('.dinle-btn', govde), spans = [...govde.querySelectorAll('.dinle-metin span')];
-    const isaretle = i => spans.forEach((s, k) => { s.classList.toggle('su', k === i); s.classList.toggle('gecti', k < i); });
-    const bitir = () => {
-      isaretle(spans.length); btn.innerHTML = `<span aria-hidden="true">↻</span> ${L.tekrarDinle}`;
-      const t = veri.tahmin, c = t[1][t[2]];
-      $('.geri-bildirim', govde).textContent = durum.tahmin == null ? L.cevap(c) : durum.tahmin === t[2] ? L.dogruTahmin(c) : L.farkliTahmin(c);
-      tamamla(1);
-    };
-    btn.addEventListener('click', () => {
-      const ses = window.speechSynthesis && speechSynthesis.getVoices().find(v => L.ses.test(v.lang));
-      if (ses) {
-        speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(veri.metin); u.lang = L.sesKod; u.voice = ses; u.rate = .92;
-        const baslar = []; let p = 0; kelimeler.forEach(w => { baslar.push(p); p += w.length + 1; });
-        u.onboundary = e => { if (e.name === 'word' || e.charIndex != null) { const i = baslar.findIndex((b, k) => e.charIndex >= b && (k === baslar.length - 1 || e.charIndex < baslar[k + 1])); isaretle(i); } };
-        u.onend = bitir; speechSynthesis.speak(u);
-      } else {
-        // bu dilde ses yoksa yazıyı dinleme temposunda vurgula
-        let i = 0; btn.disabled = true;
-        const t = setInterval(() => { if (!dlg.open || adim !== 1) return clearInterval(t); isaretle(i++); if (i > spans.length) { clearInterval(t); btn.disabled = false; bitir(); } }, 380);
-      }
-    });
-  }
-
-  /* Oku: resimli kitap sayfaları, çocuk kendi okur (sesli okuma yok). Resimli sayfası olmayan kitapta metin sayfalara bölünür, resim kapaktır. */
+  /* Dinle ve oku: resimli kitap sayfaları + Dinle/Durdur. Dinlerken okunan kelime parlar, sayfa bitince kitap çevrilir.
+     Sesi olan kitapta (EK.ses) Vids anlatımı çalar; yoksa tarayıcının sesi. Çocuk dinlemeden kendi de okuyabilir (sesli okuma yok). */
   function sayfalar() {
-    if (ek && ek.oku) return ek.oku.map(([g, t]) => ({ img: ek.dir + g + '.webp', metin: t }));
+    if (ek && ek.oku) return ek.oku.map(([g, t], i) => ({ img: ek.dir + g + '.webp', metin: t, ses: ek.ses && ek.ses.k[i] }));
     const c = cumleler(veri.metin), n = Math.min(3, Math.ceil(c.length / 2)), boy = Math.ceil(c.length / n);
     return Array.from({ length: n }, (_, i) => ({ img: kapakSrc(), metin: c.slice(i * boy, i * boy + boy).join('').trim(), kapak: true }));
   }
-  function oku() {
-    govde.innerHTML = baslik(2, L.okuAlt);
+  const sesA = new Audio(); let calan = false, cerceve = 0;
+  function dinleOku() {
+    govde.innerHTML = '';
     const S = sayfalar(); durum.okunan = durum.okunan || new Set();
     govde.insertAdjacentHTML('beforeend', `<div class="kitap-acik"><div class="ka-sol"><img alt=""></div><div class="ka-sag"><p class="okuma" lang="${L.lang}"></p><span class="ka-no"></span></div></div>
-      <div class="sayfa-gez"><button class="sg-geri" type="button" aria-label="${L.onceki}">‹</button><ol class="sg-nokta">${S.map((_, i) => `<li><button type="button" data-s="${i}" aria-label="${L.sayfa(i + 1, S.length)}"></button></li>`).join('')}</ol><button class="sg-ileri btn btn-sm" type="button">${L.cevir} ›</button></div><p class="geri-bildirim" role="status"></p>`);
-    const ka = $('.kitap-acik', govde), img = $('.ka-sol img', govde), p = $('.okuma', govde);
+      <div class="sayfa-gez"><button class="sg-geri" type="button" aria-label="${L.onceki}">‹</button><button class="dinle-btn do-btn" type="button"></button><ol class="sg-nokta">${S.map((_, i) => `<li><button type="button" data-s="${i}" aria-label="${L.sayfa(i + 1, S.length)}"></button></li>`).join('')}</ol><button class="sg-ileri btn btn-sm" type="button">${L.cevir} ›</button></div><p class="geri-bildirim" role="status"></p>`);
+    const ka = $('.kitap-acik', govde), img = $('.ka-sol img', govde), p = $('.okuma', govde), btn = $('.do-btn', govde), fb = $('.geri-bildirim', govde);
+    let kelimeler = [];
+    const dugme = () => { btn.innerHTML = calan ? `<span aria-hidden="true">❚❚</span> ${L.durdur}` : `<span aria-hidden="true">▶</span> ${L.dinleBtn}`; btn.classList.toggle('caliyor', calan); btn.setAttribute('aria-pressed', calan); };
+    const isaretle = i => kelimeler.forEach((w, k) => { w.classList.toggle('su', k === i); w.classList.toggle('gecti', k < i); });
     const goster = (s, yon = 0) => {
       durum.sayfa = s; durum.okunan.add(s);
       img.src = S[s].img; ka.classList.toggle('kapakli', !!S[s].kapak);
-      p.innerHTML = cumleler(S[s].metin).map(c => `<span class="cm">${esc(c.trim())}</span>`).join(' ');
+      let n = 0;
+      p.innerHTML = cumleler(S[s].metin).map(c => `<span class="cm">${c.trim().split(' ').map(w => `<span class="w" data-i="${n++}">${esc(w)}</span>`).join(' ')}</span>`).join(' ');
+      kelimeler = [...p.querySelectorAll('.w')];
       $('.ka-no', govde).textContent = L.sayfa(s + 1, S.length);
       govde.querySelectorAll('.sg-nokta button').forEach((b, i) => { b.classList.toggle('su', i === s); b.classList.toggle('okundu', durum.okunan.has(i)); b.setAttribute('aria-current', i === s ? 'page' : 'false'); });
       $('.sg-geri', govde).disabled = s === 0; $('.sg-ileri', govde).hidden = s === S.length - 1;
       if (yon) { ka.classList.remove('cevir-ileri', 'cevir-geri'); void ka.offsetWidth; ka.classList.add(yon > 0 ? 'cevir-ileri' : 'cevir-geri'); }
-      const fb = $('.geri-bildirim', govde);
-      if (durum.okunan.size === S.length) { fb.textContent = L.okuBitti; tamamla(2); } else fb.textContent = s === S.length - 1 ? L.okuSon : '';
+      if (durum.okunan.size === S.length && !durum.tamam.has(1)) { fb.textContent = L.okuBitti; tamamla(1); }
+      else if (!durum.tamam.has(1)) fb.textContent = s === S.length - 1 ? L.okuSon : '';
     };
-    p.addEventListener('click', e => { const c = e.target.closest('.cm'); if (!c) return; p.querySelectorAll('.cm').forEach(x => x.classList.toggle('isik', x === c && !c.classList.contains('isik'))); });
-    $('.sg-geri', govde).addEventListener('click', () => durum.sayfa > 0 && goster(durum.sayfa - 1, -1));
-    $('.sg-ileri', govde).addEventListener('click', () => durum.sayfa < S.length - 1 && goster(durum.sayfa + 1, 1));
-    govde.querySelectorAll('.sg-nokta button').forEach(b => b.addEventListener('click', () => goster(+b.dataset.s, +b.dataset.s - durum.sayfa)));
+    const sayfaBitti = () => {
+      isaretle(kelimeler.length);
+      if (durum.sayfa < S.length - 1) { goster(durum.sayfa + 1, 1); setTimeout(() => calan && sayfaCal(true), 700); }
+      else {
+        calan = false; dugme(); btn.innerHTML = `<span aria-hidden="true">↻</span> ${L.tekrarDinle}`;
+        const t = veri.tahmin, c = t[1][t[2]];
+        fb.textContent = durum.tahmin == null ? L.cevap(c) : durum.tahmin === t[2] ? L.dogruTahmin(c) : L.farkliTahmin(c);
+      }
+    };
+    function sayfaCal(bastan) {
+      const s = S[durum.sayfa];
+      cancelAnimationFrame(cerceve);
+      if (s.ses) {
+        const src = ek.dir + ek.ses.dir + s.ses[0];
+        if (bastan || !sesA.src.endsWith(src)) { sesA.src = src; sesA.currentTime = 0; }
+        sesA.onended = () => calan && sayfaBitti();
+        sesA.play().catch(() => { calan = false; dugme(); });
+        const t = s.ses[1];
+        const izle = () => { if (!calan) return; let i = 0; while (i < t.length - 1 && t[i + 1] <= sesA.currentTime + .05) i++; isaretle(i); cerceve = requestAnimationFrame(izle); };
+        izle();
+      } else {
+        const ses = window.speechSynthesis && speechSynthesis.getVoices().find(v => L.ses.test(v.lang));
+        const metin = kelimeler.map(w => w.textContent).join(' ');
+        if (!ses) {   // ses yoksa yazıyı dinleme temposunda vurgula
+          let i = 0; const z = setInterval(() => { if (!calan || !govde.contains(p)) return clearInterval(z); isaretle(i++); if (i > kelimeler.length) { clearInterval(z); sayfaBitti(); } }, 380);
+          return;
+        }
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(metin); u.lang = L.sesKod; u.voice = ses; u.rate = .92;
+        const baslar = []; let q = 0; kelimeler.forEach(w => { baslar.push(q); q += w.textContent.length + 1; });
+        u.onboundary = e => { if (e.charIndex != null) isaretle(baslar.findIndex((b, k) => e.charIndex >= b && (k === baslar.length - 1 || e.charIndex < baslar[k + 1]))); };
+        u.onend = () => calan && sayfaBitti();
+        speechSynthesis.speak(u);
+      }
+    }
+    btn.addEventListener('click', () => {
+      if (calan) { calan = false; sesA.pause(); window.speechSynthesis && speechSynthesis.cancel(); cancelAnimationFrame(cerceve); }
+      else { calan = true; sayfaCal(false); }
+      dugme();
+    });
+    const sayfayaGit = (s, yon) => { sesA.pause(); window.speechSynthesis && speechSynthesis.cancel(); goster(s, yon); if (calan) sayfaCal(true); };
+    p.addEventListener('click', e => { const c = e.target.closest('.cm'); if (!c || calan) return; p.querySelectorAll('.cm').forEach(x => x.classList.toggle('isik', x === c && !c.classList.contains('isik'))); });
+    $('.sg-geri', govde).addEventListener('click', () => durum.sayfa > 0 && sayfayaGit(durum.sayfa - 1, -1));
+    $('.sg-ileri', govde).addEventListener('click', () => durum.sayfa < S.length - 1 && sayfayaGit(durum.sayfa + 1, 1));
+    govde.querySelectorAll('.sg-nokta button').forEach(b => b.addEventListener('click', () => sayfayaGit(+b.dataset.s, +b.dataset.s - durum.sayfa)));
+    calan = false; dugme();
     goster(Math.min(durum.sayfa, S.length - 1));
   }
 
   function kelime() {
-    govde.innerHTML = baslik(3, L.kelimeAlt);
+    govde.innerHTML = baslik(2, L.kelimeAlt);
     const k = veri.kelime, anlam = karistir(k.map((x, i) => [x[1], i]));
     govde.insertAdjacentHTML('beforeend', `<div class="eslestir"><div class="sutun">${k.map((x, i) => `<button type="button" class="kel" data-i="${i}">${esc(x[0])}</button>`).join('')}</div>
       <div class="sutun">${anlam.map(([t, i]) => `<button type="button" class="anl" data-i="${i}">${esc(t)}</button>`).join('')}</div></div><p class="geri-bildirim" role="status"></p>`);
@@ -283,28 +304,28 @@
       if (b.dataset.i === sec.dataset.i) {
         b.classList.add('ok'); sec.classList.add('ok'); sec.classList.remove('secili'); sec = null; eslesen++;
         fb.textContent = eslesen === k.length ? L.kelimeTam : L.kelimeOk;
-        if (eslesen === k.length) tamamla(3);
+        if (eslesen === k.length) tamamla(2);
       } else { b.classList.add('yanlis'); fb.textContent = L.tekrar; setTimeout(() => b.classList.remove('yanlis'), 500); }
     }));
-    if (durum.tamam.has(3)) { govde.querySelectorAll('.kel,.anl').forEach(b => b.classList.add('ok')); fb.textContent = L.adimBitti; }
+    if (durum.tamam.has(2)) { govde.querySelectorAll('.kel,.anl').forEach(b => b.classList.add('ok')); fb.textContent = L.adimBitti; }
   }
 
   function izle() {
     if (ek && ek.izle) return izleVideo(ek.izle);
-    govde.innerHTML = baslik(4, L.izleAlt);
+    govde.innerHTML = baslik(3, L.izleAlt);
     govde.insertAdjacentHTML('beforeend', `<div class="sahne-ekran"><img src="${kapakSrc()}" alt=""><p class="altyazi"></p>
       <button class="oynat" type="button" aria-label="${L.oynat}"><span aria-hidden="true">▶</span></button></div><p class="geri-bildirim" role="status"></p>`);
     const ekran = $('.sahne-ekran', govde), alt = $('.altyazi', govde), btn = $('.oynat', govde);
     btn.addEventListener('click', () => {
       btn.hidden = true; ekran.classList.remove('oynuyor'); void ekran.offsetWidth; ekran.classList.add('oynuyor');
-      const burada = () => dlg.open && adim === 4 && govde.contains(alt);
+      const burada = () => dlg.open && adim === 3 && govde.contains(alt);
       veri.sahne.forEach((s, i) => setTimeout(() => { if (!burada()) return; alt.textContent = s; alt.classList.remove('gir'); void alt.offsetWidth; alt.classList.add('gir'); }, i * 3000));
-      setTimeout(() => { if (!burada()) return; btn.hidden = false; btn.setAttribute('aria-label', L.tekrarIzle); btn.innerHTML = '<span aria-hidden="true">↻</span>'; $('.geri-bildirim', govde).textContent = L.izledin; tamamla(4); }, 9200);
+      setTimeout(() => { if (!burada()) return; btn.hidden = false; btn.setAttribute('aria-label', L.tekrarIzle); btn.innerHTML = '<span aria-hidden="true">↻</span>'; $('.geri-bildirim', govde).textContent = L.izledin; tamamla(3); }, 9200);
     });
   }
   /* Videolu izle: önce sessiz, döngülü WebP animasyon görünür; oynatınca sesli video altyazıyla başlar. */
   function izleVideo(v) {
-    govde.innerHTML = baslik(4, L.izleVideoAlt);
+    govde.innerHTML = baslik(3, L.izleVideoAlt);
     govde.insertAdjacentHTML('beforeend', `<div class="sahne-ekran video"><img class="izle-onizleme" src="${ek.dir + v.webp}" alt="">
       <video playsinline preload="none" poster="${ek.dir + v.poster}"></video><p class="altyazi" aria-live="off"></p>
       <button class="oynat" type="button" aria-label="${L.sesliIzle}"><span aria-hidden="true">▶</span></button><span class="sesli-etiket" aria-hidden="true">🔊 ${L.sesliIzle}</span></div><p class="geri-bildirim" role="status"></p>`);
@@ -313,7 +334,7 @@
     vid.addEventListener('timeupdate', () => {
       const t = vid.currentTime, i = v.alt.findIndex(([a, b]) => t >= a && t < b);
       if (i !== son) { son = i; alt.textContent = i < 0 ? '' : v.alt[i][2]; if (i >= 0) { alt.classList.remove('gir'); void alt.offsetWidth; alt.classList.add('gir'); } }
-      if (vid.duration && t > vid.duration * .85 && !durum.tamam.has(4)) { $('.geri-bildirim', govde).textContent = L.izledin; tamamla(4); }
+      if (vid.duration && t > vid.duration * .85 && !durum.tamam.has(3)) { $('.geri-bildirim', govde).textContent = L.izledin; tamamla(3); }
     });
     vid.addEventListener('ended', () => { btn.hidden = false; btn.setAttribute('aria-label', L.tekrarIzle); btn.innerHTML = '<span aria-hidden="true">↻</span>'; vid.controls = false; });
     btn.addEventListener('click', () => {
@@ -324,7 +345,7 @@
   }
 
   function anla() {
-    govde.innerHTML = baslik(5, L.anlaAlt);
+    govde.innerHTML = baslik(4, L.anlaAlt);
     secenekler(veri.anla, (i, b, d) => {
       const fb = $('.geri-bildirim', govde);
       if (i === d) {
@@ -335,7 +356,7 @@
     });
     govde.insertAdjacentHTML('beforeend', `<label class="uret" hidden><span>${esc(veri.uret)}</span><textarea rows="3" maxlength="300" placeholder="${L.yazPh}"></textarea><small>${L.yazNot}</small></label>`);
     const ta = $('.uret textarea', govde);
-    ta.addEventListener('input', () => { if (ta.value.trim().length >= 8) tamamla(5); });
+    ta.addEventListener('input', () => { if (ta.value.trim().length >= 8) tamamla(4); });
   }
 
   function final() {

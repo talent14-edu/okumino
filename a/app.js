@@ -38,7 +38,7 @@
     kelimeler:['Orman neden birden sessizleşmiş olabilir?','Kuşların şarkısının kaybolduğu sabahı dinle.',['yankı','fısıltı','şarkı'],'Kelimelerin uçup gittiği sahneyi izle.','Ormana geri getirmek istediğin üç kelimeyi seç.'],
     bulut:['Bulutun taşıdığı mektup kime gidiyor olabilir?','Bulutun mektubu yakaladığı anı dinle.',['mektup','zarf','rüzgâr'],'Bulutun gökyüzündeki yolculuğunu izle.','Bir arkadaşına üç cümlelik bir mektup yaz.']
   };
-  const ADIM = [['önce','Tahmin et','?'],['sırası','Dinle','img/mod_dinle.webp'],['sırası','Oku','img/kitap_acik.webp'],['sırası','Kelime oyunu','img/mod_oyna.webp'],['sırası','İzle','img/mod_izle.webp'],['sonra','Anla ve üret','img/mino_dedektif.webp']];
+  const ADIM = [['önce','Tahmin et','?'],['sırası','Dinle ve oku','img/kitap_acik.webp'],['sırası','Kelime oyunu','img/mod_oyna.webp'],['sırası','İzle','img/mod_izle.webp'],['sonra','Anla ve üret','img/mino_dedektif.webp']];
   const KILIT = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 10V7.5a5 5 0 0 1 10 0V10h.5A1.5 1.5 0 0 1 19 11.5v8a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-8A1.5 1.5 0 0 1 6.5 10Zm2.2 0h5.6V7.5a2.8 2.8 0 0 0-5.6 0Z"/></svg>';
   function patikaCiz(b, lv) {
     const n = lv.durak, pk = $('#patika');
@@ -53,14 +53,14 @@
       kutu.style.setProperty('--ok', `${d.getBoundingClientRect().left + d.offsetWidth / 2 - kutu.getBoundingClientRect().left - 16}px`);
     });
   }
-  const OKU_VARSAYILAN = 'Durağın sayfalarını kendi hızında, içinden oku.', OKU = { pinokyo: 'Altı resimli sayfada Pinokyo’nun ilk günlerini kendin oku.' };
+  const OKU_VARSAYILAN = 'Sonra sayfaları kendin de oku.', OKU = { pinokyo: 'Pinokyo’nun ilk günlerini altı resimli sayfada dinle, sonra kendin oku.' };
   function etkinlikCiz(b) {
     const e = ETK[b.id], oku = OKU[b.id] || OKU_VARSAYILAN;
-    // kart sırası: tahmin, dinle, OKU, kelimeler, izle, anla (ETK dizisinde oku yok, araya girer)
-    const metin = k => k < 2 ? e[k] : k === 2 ? oku : e[k - 1];
+    // kart sırası: tahmin, dinle ve oku, kelimeler, izle, anla
+    const metin = k => k === 1 ? (OKU[b.id] || `${e[1]} ${oku}`) : e[k];
     $('#etkinlik').innerHTML = ADIM.map(([faz, ad, ik], k) => `<li style="--d:${k}"><button class="kart-oyna" type="button" data-adim="${k}" aria-label="${ad} etkinliğini oyna"></button><div class="no2"><i>${k + 1}</i><small>${faz}</small></div>
       ${ik === '?' ? '<span class="tahmin-ikon" aria-hidden="true">?</span>' : `<img src="${ik}" alt="">`}<b>${ad}</b>
-      <span class="oyna-etiket" aria-hidden="true">Oyna ▶</span>${k === 3 ? `<p>Hikâyeden üç kelime. Her birini anlamıyla eşleştir.</p><div class="kelimeler">${e[2].map(w => `<span>${w}</span>`).join('')}</div>` : `<p>${metin(k)}</p>`}</li>`).join('');
+      <span class="oyna-etiket" aria-hidden="true">Oyna ▶</span>${k === 2 ? `<p>Hikâyeden üç kelime. Her birini anlamıyla eşleştir.</p><div class="kelimeler">${e[2].map(w => `<span>${w}</span>`).join('')}</div>` : `<p>${metin(k)}</p>`}</li>`).join('');
   }
   let secili = 0, gezYerlesim = null;
 
