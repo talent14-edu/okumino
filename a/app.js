@@ -11,22 +11,24 @@
     { id:'oz', title:'Oz Büyücüsü', author:'L. Frank Baum', desc:'Sarı tuğlalı yolda yürü; cesareti, dostluğu ve eve dönüş yolunu keşfet.' },
     { id:'beyaz-dis', title:'Beyaz Diş', author:'Jack London', desc:'Karlarla kaplı doğada, Beyaz Diş ile güvenin ve dostluğun izini bul.' },
     { id:'define', title:'Define Adası', author:'Robert Louis Stevenson', desc:'Haritayı aç, yelkenleri hazırla. Gizemli bir adaya doğru yola çık.' },
+    { id:'kucuk-prens', title:'Küçük Prens', author:'Antoine de Saint-Exupéry', desc:'Çölde kalan bir pilot ve minicik bir gezegenden gelen çocuk. Görmeyi ve sevmeyi yeniden öğren.' },
     { id:'pollyanna', title:'Pollyanna', author:'Eleanor H. Porter', desc:'Küçük mutlulukları bulma oyununda Pollyanna’nın dünyasına konuk ol.' },
     { id:'mino', title:'Mino ve Yıldız Tohumu', author:'Okumino', original:true, desc:'Mino’nun bulduğu minicik tohum, gökyüzüne uzanan bir maceranın başlangıcı.' },
     { id:'kelimeler', title:'Kayıp Kelimeler Ormanı', author:'Okumino', original:true, desc:'Kelimeler birer birer kayboluyor! Ormanın sesini geri getirebilir misin?' },
     { id:'bulut', title:'Bulut Postacısı', author:'Okumino', original:true, desc:'Gökyüzünde teslim edilmeyi bekleyen bir mektup ve yepyeni dostluklar.' }
   ];
   // tanıtım seçkisi: seviye eşlemesi ve durak sayıları (bir durak = 6 adım; sesli okuma yok)
-  const LEVEL = { heidi:'minik', mino:'minik', bulut:'minik', pinokyo:'kasif', alice:'kasif', oz:'kasif', pollyanna:'kasif', 'beyaz-dis':'usta', define:'usta', kelimeler:'usta' };
+  const LEVEL = { 'kucuk-prens':'usta', heidi:'minik', mino:'minik', bulut:'minik', pinokyo:'kasif', alice:'kasif', oz:'kasif', pollyanna:'kasif', 'beyaz-dis':'usta', define:'usta', kelimeler:'usta' };
   const LV = { minik:{ ad:'Minik', sinif:'1–2. sınıf', durak:6 }, kasif:{ ad:'Kâşif', sinif:'3–5. sınıf', durak:8 }, usta:{ ad:'Usta', sinif:'6–8. sınıf', durak:10 } };
-  const OPENING = { pinokyo:'Bir varmış, bir yokmuş…', heidi:'Dağın tepesinde bir kulübe…', alice:'Tavşan deliğinden aşağı…', oz:'Bir kasırga esti…', 'beyaz-dis':'Karlı ormanda bir iz…',
+  const OPENING = { 'kucuk-prens':'Lütfen, bana bir koyun çiz…', pinokyo:'Bir varmış, bir yokmuş…', heidi:'Dağın tepesinde bir kulübe…', alice:'Tavşan deliğinden aşağı…', oz:'Bir kasırga esti…', 'beyaz-dis':'Karlı ormanda bir iz…',
     define:'Eski bir harita bulundu…', pollyanna:'Mutlu olmak bir oyundu…', mino:'Minicik bir tohum parladı…', kelimeler:'Orman sustu…', bulut:'Bir mektup uçup geldi…' };
   // Mino'nun renklerinden canlı sırt paleti; sarı sırtta yazı koyu
-  const C = ['#E2552B','#2F5FD0','#F2B233','#1F9C8A','#C23C6B','#5C9A3E','#7B4FB8','#F08A24','#3E9BD6','#B8442E'];
-  const H = [330,300,352,318,340,306,326,356,312,338], T = [44,38,50,40,46,36,42,52,38,46];
+  const C = ['#E2552B','#2F5FD0','#F2B233','#1F9C8A','#C23C6B','#5C9A3E','#1E3A8A','#7B4FB8','#F08A24','#3E9BD6','#B8442E'];
+  const H = [330,300,352,318,340,306,334,326,356,312,338], T = [44,38,50,40,46,36,40,42,52,38,46];
   const cover = b => `img/covers/${b.id}.webp`;
   /* Bir durağın etkinlik metinleri, kitaba göre (Oku kartı OKU’dan gelir): [tahmin, dinle, kelimeler, izle, anla ve üret]. Tanıtım örneği. */
   const ETK = {
+    'kucuk-prens':['Çölde beliren altın saçlı çocuk pilottan ne isteyecek?','Pilotun çölde küçük bir çocukla karşılaştığı sabahı dinle.',['çöl', 'gezegen', 'filiz'],'Minicik gezegenden gelen çocuğun hikâyesini izle.','Senin gezegeninde neye özen gösterirdin? Yaz.'],
     pinokyo:['Konuşan bir odun parçası… Ustanın elinde neye dönüşecek?','Gepetto Usta’nın kuklayı yonttuğu günü dinle.',['usta','yontmak','kukla'],'Pinokyo’nun ilk adımlarını izle.','Pinokyo’ya evden çıkmadan önce uyacağı bir kural yaz.'],
     heidi:['Dağın tepesindeki kulübede kim yaşıyor olabilir?','Heidi’nin dedesinin yanına geldiği günü dinle.',['otlak','kulübe','keçi'],'Heidi’nin samanlıktaki yatağını izle.','Dede önce neden sessizdi? Tek cümleyle anlat.'],
     alice:['Ceketli, saatli bir tavşan nereye koşuyor olabilir?','Alice’in tavşan deliğinden aşağı düşüşünü dinle.',['delik','anahtar','şişe'],'Alice’in küçülüp büyüdüğü sahneyi izle.','Sen küçülseydin odanda neler görürdün? Üçünü çiz.'],
@@ -53,7 +55,7 @@
       kutu.style.setProperty('--ok', `${d.getBoundingClientRect().left + d.offsetWidth / 2 - kutu.getBoundingClientRect().left - 16}px`);
     });
   }
-  const OKU_VARSAYILAN = 'Sonra sayfaları kendin de oku.', OKU = { pinokyo: 'Pinokyo’nun ilk günlerini altı resimli sayfada dinle, sonra kendin oku.' };
+  const OKU_VARSAYILAN = 'Sonra sayfaları kendin de oku.', OKU = { 'kucuk-prens': 'Pilotla çocuğun ilk günlerini altı resimli sayfada dinle, sonra kendin oku.', pinokyo: 'Pinokyo’nun ilk günlerini altı resimli sayfada dinle, sonra kendin oku.' };
   function etkinlikCiz(b) {
     const e = ETK[b.id], oku = OKU[b.id] || OKU_VARSAYILAN;
     // kart sırası: tahmin, dinle ve oku, kelimeler, izle, anla

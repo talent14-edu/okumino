@@ -76,6 +76,14 @@
       anla: ['Yaşlı denizci kimden korkuyordu?', ['Tek bacaklı bir adamdan', 'Jim’den', 'Bir köpekten'], 0],
       uret: 'Kendi define haritanı düşün: üç işareti ve çarpının yerini yaz.'
     },
+    'kucuk-prens': {
+      tahmin: ['Çölün ortasında beliren çocuk pilottan ne isteyecek?', ['Bir koyun resmi', 'Bir şişe su', 'Uçakla bir gezi'], 0],
+      metin: 'Pilotun uçağı Büyük Sahra Çölü’ne indi. Sabah incecik bir ses onu uyandırdı: “Lütfen, bana bir koyun çizer misin?” Karşısında altın saçlı küçük bir çocuk duruyordu. Pilot sonunda üç delikli bir kutu çizdi ve çocuk çok sevindi. Çocuk minicik bir gezegenden geliyordu ve orada bir gülü vardı.',
+      kelime: [['çöl', 'Yağmurun çok az yağdığı, kumlu ve kurak yer'], ['gezegen', 'Bir yıldızın çevresinde dönen gök cismi'], ['filiz', 'Topraktan yeni çıkan körpe bitki']],
+      sahne: ['Çölde bir uçak ve yalnız bir pilot.', 'Altın saçlı bir çocuk: “Bana bir koyun çizer misin?”', 'Minicik bir gezegende cam fanus altında bir gül.'],
+      anla: ['Pilot sonunda koyun yerine ne çizdi?', ['Üç delikli bir kutu', 'Bir uçak', 'Bir gül'], 0],
+      uret: 'Senin minicik bir gezegenin olsaydı her sabah neye özen gösterirdin? İki cümleyle yaz.'
+    },
     pollyanna: {
       tahmin: ['“Mutluluk oyunu” nasıl oynanıyor olabilir?', ['Her şeyde sevinecek bir şey bularak', 'Koşu yarışı yaparak', 'Saklambaçla'], 0],
       metin: 'Pollyanna babasını kaybedince Polly Teyzesinin yanına geldi. Teyzesi onu tavan arasındaki küçük, eşyasız bir odaya yerleştirdi. Pollyanna önce üzüldü. Sonra pencereden ağaçları ve gökyüzünü gördü. “Ayna yok, öyleyse çillerimi de görmem!” dedi. Babasından öğrendiği oyunu oynuyordu: her şeyde sevinecek bir şey bulmak.',
@@ -110,6 +118,18 @@
     }
   };  /* Sahne görselleri, resimli okuma sayfaları ve izle videosu olan kitaplar. Olmayanlarda her adımda kapak görünür. */
   const EK = {
+    'kucuk-prens': {
+      dir: 'img/kucuk-prens/',
+      gorsel: ['p1', null, 'p3', null, 'p4', 'p6'],
+      oku: [
+        ['p1', 'Pilotun uçağı, Büyük Sahra Çölü’nün üstünde birden sarsıldı. Motor sustu ve uçak kumlara indi. Yanında ne bir yolcu vardı ne de bir tamirci. Matarasındaki su ancak birkaç gün yeterdi. O gece yıldızların altında uyurken, kendini okyanusun ortasındaki bir saldan daha yalnız hissetti.'],
+        ['p2', 'Sabah, güneş doğarken incecik bir ses onu uyandırdı: “Lütfen… bana bir koyun çizer misin?” Pilot yerinden fırladı. Karşısında altın saçlı, ciddi bakışlı küçük bir çocuk duruyordu. Ne yorgun görünüyordu ne aç ne de korkmuş. Sanki çölün ortasında hiç kaybolmamış gibiydi.'],
+        ['p3', 'Pilot birkaç koyun çizdi ama çocuk hiçbirini beğenmedi. “Bu çok hasta.” “Bu bir koç, boynuzları var.” “Bu da çok yaşlı.” Sabrı tükenen pilot üç delikli bir kutu çizdi: “İstediğin koyun bunun içinde.” Çocuğun yüzü aydınlandı: “Tam istediğim gibi!”'],
+        ['p4', 'Pilot zamanla öğrendi: Çocuk, bir evden biraz büyük, minicik bir gezegenden geliyordu. Orada iki tüten, bir sönmüş yanardağ vardı. Her sabah onları özenle temizliyordu. Baobap filizlerini de küçükken söküyordu; çünkü büyürlerse kökleri koca gezegeni paramparça edebilirdi.'],
+        ['p5', 'Gezegeni öyle küçüktü ki, gün batımını izlemek için akşamı beklemesi gerekmiyordu. Sandalyesini birkaç adım çekmesi yetiyordu. “Bir gün gün batımını kırk dört kez izledim,” dedi. Sonra biraz sustu ve ekledi: “İnsan çok üzgün olunca gün batımlarını sever.”'],
+        ['p6', 'Gezegeninde bir de gül vardı. Rüzgârdan bir cam fanusla korunuyor, her gün sulanıyordu. Biraz kibirli, biraz nazlıydı ama çocuk onu çok seviyordu. Milyonlarca yıldızın birinde böyle bir gül varsa, insan gökyüzüne bakınca mutlu olabilirdi.']
+      ]
+    },
     pinokyo: {
       dir: 'img/pinokyo/',
       gorsel: ['p1', null, 'p3', null, 'p4', 'p6'],   // adım başına sol panel (null: adım kendi görselini taşır)
@@ -136,10 +156,14 @@
   const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const cumleler = t => t.match(/[^.!?…]+[.!?…]+[”’"]*\s*/g) || [t];
 
+  /* Ses efektleri: seçim, doğru, yanlış, sayfa, adım tamam, durak bitti. Başlıktaki hoparlör düğmesi kapatır (tercih tarayıcıda kalır). */
+  const SFX = {}; ['sec', 'dogru', 'yanlis', 'sayfa', 'adim', 'final'].forEach(n => { SFX[n] = new Audio(`img/sfx/${n}.mp3`); SFX[n].preload = 'auto'; });
+  let sesAcik = true; try { sesAcik = localStorage.getItem('okSes') !== '0'; } catch (e) {}
+  const efekt = (n, vol = .6) => { if (!sesAcik || !SFX[n]) return; const a = SFX[n].cloneNode(); a.volume = vol; a.play().catch(() => {}); };
   const dlg = document.createElement('dialog');
   dlg.className = 'oyun'; dlg.setAttribute('aria-labelledby', 'oyunBaslik'); dlg.lang = L.lang;
   dlg.innerHTML = `<div class="oyun-ust"><img class="oyun-kapak" alt=""><div><p class="oyun-k" id="oyunBaslik"></p><ol class="oyun-ilerleme" aria-label="${L.adimlar}"></ol></div>
-      <button class="oyun-kapat" type="button" aria-label="${L.kapat}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+      <button class="oyun-sfx" type="button" aria-pressed="true" aria-label="Ses efektlerini kapat"><span aria-hidden="true">🔊</span></button><button class="oyun-kapat" type="button" aria-label="${L.kapat}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <div class="oyun-orta"><figure class="oyun-gorsel" aria-hidden="true"><img class="og-arka" alt=""><img class="og-sahne" alt=""><img class="og-kapak" alt=""></figure>
       <div class="oyun-govde" aria-live="polite"></div></div>
     <div class="oyun-alt"><button class="oyun-geri" type="button">${L.geri}</button><button class="btn oyun-ileri" type="button">${L.ileri}</button></div>`;
@@ -157,12 +181,14 @@
   function sustur() { calan = false; sesA.pause(); window.speechSynthesis && speechSynthesis.cancel(); dlg.querySelectorAll('video').forEach(v => v.pause()); }
   function kapat() { sustur(); dlg.close(); }
   $('.oyun-kapat', dlg).addEventListener('click', kapat);
+  const sfxBtn = $('.oyun-sfx', dlg), sfxCiz = () => { sfxBtn.firstChild.textContent = sesAcik ? '🔊' : '🔇'; sfxBtn.setAttribute('aria-pressed', sesAcik); sfxBtn.setAttribute('aria-label', sesAcik ? 'Ses efektlerini kapat' : 'Ses efektlerini aç'); };
+  sfxBtn.addEventListener('click', () => { sesAcik = !sesAcik; try { localStorage.setItem('okSes', sesAcik ? '1' : '0'); } catch (e) {} sfxCiz(); efekt('sec'); }); sfxCiz();
   dlg.addEventListener('cancel', sustur);
   dlg.addEventListener('click', e => { if (e.target === dlg) kapat(); });
   geri.addEventListener('click', () => { if (adim > 0) { adim--; ciz(); } });
   ileri.addEventListener('click', () => { if (adim <= SON) { adim++; ciz(); } else kapat(); });
 
-  function tamamla(i) { durum.tamam.add(i); ilerlemeCiz(); if (i === adim) ileri.disabled = false; }
+  function tamamla(i) { if (!durum.tamam.has(i)) setTimeout(() => efekt('adim', .45), 380); durum.tamam.add(i); ilerlemeCiz(); if (i === adim) ileri.disabled = false; }
   function ilerlemeCiz() {
     $('.oyun-ilerleme', dlg).innerHTML = L.adim.map((a, i) => `<li class="${i === adim ? 'simdi' : ''} ${durum.tamam.has(i) ? 'bitti' : ''}"><button type="button" data-a="${i}" aria-label="${L.adimEtiket(i + 1, a, durum.tamam.has(i))}">${durum.tamam.has(i) ? '✓' : i + 1}</button><span>${a}</span></li>`).join('');
     dlg.querySelectorAll('.oyun-ilerleme button').forEach(b => b.addEventListener('click', () => { adim = +b.dataset.a; ciz(); }));
@@ -202,7 +228,7 @@
   function tahmin() {
     govde.innerHTML = baslik(0, L.tahminAlt);
     secenekler(veri.tahmin, (i, b) => {
-      durum.tahmin = i;
+      durum.tahmin = i; efekt('sec');
       govde.querySelectorAll('.secenek button').forEach(x => x.classList.toggle('secili', x === b));
       $('.geri-bildirim', govde).textContent = L.tahminOk;
       tamamla(0);
@@ -238,7 +264,7 @@
       $('.ka-no', govde).textContent = L.sayfa(s + 1, S.length);
       gez.querySelectorAll('.sg-nokta button').forEach((b, i) => { b.classList.toggle('su', i === s); b.classList.toggle('okundu', durum.okunan.has(i)); b.setAttribute('aria-current', i === s ? 'page' : 'false'); });
       $('.sg-geri', gez).disabled = s === 0; $('.sg-ileri', gez).hidden = s === S.length - 1;
-      if (yon) { ka.classList.remove('cevir-ileri', 'cevir-geri'); void ka.offsetWidth; ka.classList.add(yon > 0 ? 'cevir-ileri' : 'cevir-geri'); }
+      if (yon) { efekt('sayfa', .7); ka.classList.remove('cevir-ileri', 'cevir-geri'); void ka.offsetWidth; ka.classList.add(yon > 0 ? 'cevir-ileri' : 'cevir-geri'); }
       if (durum.okunan.size === S.length && !durum.tamam.has(1)) { fb.textContent = L.okuBitti; tamamla(1); }
       else if (!durum.tamam.has(1)) fb.textContent = s === S.length - 1 ? L.okuSon : '';
     };
@@ -299,15 +325,15 @@
     let sec = null, eslesen = 0; const fb = $('.geri-bildirim', govde);
     govde.querySelectorAll('.kel').forEach(b => b.addEventListener('click', () => {
       if (b.classList.contains('ok')) return;
-      govde.querySelectorAll('.kel').forEach(x => x.classList.remove('secili')); b.classList.add('secili'); sec = b;
+      govde.querySelectorAll('.kel').forEach(x => x.classList.remove('secili')); b.classList.add('secili'); sec = b; efekt('sec', .5);
     }));
     govde.querySelectorAll('.anl').forEach(b => b.addEventListener('click', () => {
       if (!sec || b.classList.contains('ok')) { if (!sec) fb.textContent = L.kelimeSec; return; }
       if (b.dataset.i === sec.dataset.i) {
-        b.classList.add('ok'); sec.classList.add('ok'); sec.classList.remove('secili'); sec = null; eslesen++;
+        b.classList.add('ok'); sec.classList.add('ok'); sec.classList.remove('secili'); sec = null; eslesen++; efekt('dogru', .5);
         fb.textContent = eslesen === k.length ? L.kelimeTam : L.kelimeOk;
         if (eslesen === k.length) tamamla(2);
-      } else { b.classList.add('yanlis'); fb.textContent = L.tekrar; setTimeout(() => b.classList.remove('yanlis'), 500); }
+      } else { efekt('yanlis', .5); b.classList.add('yanlis'); fb.textContent = L.tekrar; setTimeout(() => b.classList.remove('yanlis'), 500); }
     }));
     if (durum.tamam.has(2)) { govde.querySelectorAll('.kel,.anl').forEach(b => b.classList.add('ok')); fb.textContent = L.adimBitti; }
   }
@@ -351,10 +377,10 @@
     secenekler(veri.anla, (i, b, d) => {
       const fb = $('.geri-bildirim', govde);
       if (i === d) {
-        b.classList.add('ok'); govde.querySelectorAll('.secenek button').forEach(x => x.disabled = true);
+        efekt('dogru'); b.classList.add('ok'); govde.querySelectorAll('.secenek button').forEach(x => x.disabled = true);
         fb.textContent = L.anlaOk;
         $('.uret', govde).hidden = false; $('.uret textarea', govde).focus();
-      } else { b.classList.add('yanlis'); fb.textContent = L.anlaYanlis; setTimeout(() => b.classList.remove('yanlis'), 500); }
+      } else { efekt('yanlis', .5); b.classList.add('yanlis'); fb.textContent = L.anlaYanlis; setTimeout(() => b.classList.remove('yanlis'), 500); }
     });
     govde.insertAdjacentHTML('beforeend', `<label class="uret" hidden><span>${esc(veri.uret)}</span><textarea rows="3" maxlength="300" placeholder="${L.yazPh}"></textarea><small>${L.yazNot}</small></label>`);
     const ta = $('.uret textarea', govde);
@@ -362,6 +388,7 @@
   }
 
   function final() {
+    efekt('final', .55);
     $('.oyun-ilerleme', dlg).innerHTML = L.adim.map(a => `<li class="bitti"><button type="button" disabled>✓</button><span>${a}</span></li>`).join('');
     govde.innerHTML = `<div class="final-ekran"><div class="final-damga" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#FFFDF5" stroke="currentColor" stroke-width="6" stroke-dasharray="7 4"/><text x="50" y="47" text-anchor="middle">${L.damga[0]}</text><text x="50" y="68" text-anchor="middle" class="t2">${L.damga[1]}</text></svg></div>
       <img class="final-mino" src="img/mino_selam.webp" alt="">

@@ -670,3 +670,7 @@ dialog.oyun.genis .sahne-ekran{width:min(100%,calc((min(94vh,1000px) - 330px) * 
   .oyun-alt .sg-nokta{gap:6px}
   .ka-sag .geri-bildirim{position:static;margin-top:10px}
 }
+
+/* ses efekti düğmesi (2026-11-14) */
+.oyun-sfx{width:44px;height:44px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--sand);display:grid;place-items:center;font-size:19px;flex:none;margin-right:8px}
+.oyun-sfx[aria-pressed="false"]{opacity:.6}
