@@ -9,7 +9,7 @@
     adim: ['Tahmin et', 'Dinle ve oku', 'Kelime oyunu', 'İzle', 'Anla ve üret'],
     faz: ['önce', 'sırası', 'sırası', 'sırası', 'sonra'],
     durak: t => `${t} · 1. durak`, adimEtiket: (i, a, ok) => `${i}. adım: ${a}${ok ? ', tamamlandı' : ''}`,
-    ileri: 'İleri →', bitir: 'Durağı bitir ✓', don: 'Kitaplığa dön', geri: '← Geri', kapat: 'Kapat', adimlar: 'Adımlar',
+    atla: 'Demoyu atla', ileri: 'İleri →', bitir: 'Durağı bitir ✓', don: 'Kitaplığa dön', geri: '← Geri', kapat: 'Kapat', adimlar: 'Adımlar',
     kapak: t => `${t} kapağı`,
     tahminAlt: 'Kapağa bak. Sence ne olacak? Yanlış tahmin yok, dinleyince göreceğiz.',
     tahminOk: 'Tahminini not ettim! Şimdi dinleyip kontrol edelim.',
@@ -121,6 +121,7 @@
     'kucuk-prens': {
       dir: 'img/kucuk-prens/',
       gorsel: ['p1', null, 'p3', null, 'p4', 'p6'],
+      ses: { dir: 'ses/', k: [["s1.mp3",[0.0,0.74,1.18,1.62,2.1,2.66,3.04,3.54,4.6,4.9,5.5,5.78,6.14,6.52,7.72,8.16,8.38,8.54,8.92,9.64,9.74,9.88,9.98,11.36,12.2,12.48,12.98,13.42,13.64,14.82,14.94,15.08,15.76,16.18,16.76,17.58,18.16,18.76,19.0,19.48,19.78,20.16]],["s2.mp3",[0.12,0.94,1.22,1.68,2.68,2.78,2.9,3.14,4.54,5.0,5.7,5.92,6.26,6.54,7.58,7.9,8.32,9.44,10.08,10.78,11.7,12.06,12.8,12.98,13.22,13.4,14.58,14.8,15.22,16.24,16.3,16.9,16.96,17.1,18.22,18.42,18.78,19.26,19.58,20.36]],["s3.mp3",[0.12,0.46,0.84,1.12,1.54,2.02,2.22,2.8,4.12,4.38,4.52,5.66,5.86,6.0,6.56,7.04,7.92,8.06,8.18,8.34,9.44,9.88,10.28,10.88,11.1,11.52,11.64,11.9,12.74,13.26,13.52,13.7,14.98,15.38,15.66,16.78,16.9,17.56]],["s4.mp3",[0.12,0.44,0.92,2.02,2.4,2.6,3.0,3.26,3.94,4.44,4.9,6.3,6.68,6.9,7.28,7.54,8.0,8.4,8.54,9.5,9.66,10.0,10.42,11.06,12.46,12.72,12.88,13.44,14.14,15.2,15.44,16.22,16.68,17.3,17.96,18.74]],["s5.mp3",[0.12,0.76,0.96,1.56,2.1,2.2,2.64,3.06,3.26,3.78,4.3,5.56,6.4,6.84,7.04,7.5,8.94,9.08,9.28,9.44,10.02,10.42,10.64,11.0,11.5,13.86,14.7,15.0,15.46,15.58,16.84,17.28,17.48,17.86,18.28,18.5,19.12]],["s6.mp3",[0.12,0.84,0.96,1.1,1.22,1.46,2.6,3.12,3.36,3.54,4.14,4.98,5.1,5.34,6.08,6.86,7.52,8.44,8.72,9.3,9.58,9.78,11.24,12.04,12.52,12.94,13.24,13.52,13.76,14.14,14.78,15.46,15.9,16.22]]] },   // Vids Saro (Yetişkin), ses etiketli
       oku: [
         ['p1', 'Pilotun uçağı, Büyük Sahra Çölü’nün üstünde birden sarsıldı. Motor sustu ve uçak kumlara indi. Yanında ne bir yolcu vardı ne de bir tamirci. Matarasındaki su ancak birkaç gün yeterdi. O gece yıldızların altında uyurken, kendini okyanusun ortasındaki bir saldan daha yalnız hissetti.'],
         ['p2', 'Sabah, güneş doğarken incecik bir ses onu uyandırdı: “Lütfen… bana bir koyun çizer misin?” Pilot yerinden fırladı. Karşısında altın saçlı, ciddi bakışlı küçük bir çocuk duruyordu. Ne yorgun görünüyordu ne aç ne de korkmuş. Sanki çölün ortasında hiç kaybolmamış gibiydi.'],
@@ -166,7 +167,7 @@
       <button class="oyun-sfx" type="button" aria-pressed="true" aria-label="Ses efektlerini kapat"><span aria-hidden="true">🔊</span></button><button class="oyun-kapat" type="button" aria-label="${L.kapat}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <div class="oyun-orta"><figure class="oyun-gorsel" aria-hidden="true"><img class="og-arka" alt=""><img class="og-sahne" alt=""><img class="og-kapak" alt=""></figure>
       <div class="oyun-govde" aria-live="polite"></div></div>
-    <div class="oyun-alt"><button class="oyun-geri" type="button">${L.geri}</button><button class="btn oyun-ileri" type="button">${L.ileri}</button></div>`;
+    <div class="oyun-alt"><button class="oyun-geri" type="button">${L.geri}</button><div class="alt-orta"><button class="demo-atla" type="button"><span aria-hidden="true">⏭</span> ${L.atla}</button></div><button class="btn oyun-ileri" type="button">${L.ileri}</button></div>`;
   document.body.appendChild(dlg);
   const govde = $('.oyun-govde', dlg), ileri = $('.oyun-ileri', dlg), geri = $('.oyun-geri', dlg), gorsel = $('.oyun-gorsel', dlg);
   let kitap = null, veri = null, ek = null, adim = 0, durum = {};
@@ -186,6 +187,9 @@
   dlg.addEventListener('cancel', sustur);
   dlg.addEventListener('click', e => { if (e.target === dlg) kapat(); });
   geri.addEventListener('click', () => { if (adim > 0) { adim--; ciz(); } });
+  // Demoyu atla: demoyu gösteren kişi alıştırmayı çözmeden adımı tamamlanmış sayıp geçer
+  const atla = $('.demo-atla', dlg);
+  atla.addEventListener('click', () => { if (adim > SON) return; efekt('sec', .5); durum.tamam.add(adim); adim++; ciz(); });
   ileri.addEventListener('click', () => { if (adim <= SON) { adim++; ciz(); } else kapat(); });
 
   function tamamla(i) { if (!durum.tamam.has(i)) setTimeout(() => efekt('adim', .45), 380); durum.tamam.add(i); ilerlemeCiz(); if (i === adim) ileri.disabled = false; }
@@ -210,7 +214,7 @@
     sustur(); dlg.querySelectorAll('.oyun-alt .sayfa-gez').forEach(e => e.remove());
     ilerlemeCiz(); gorselCiz();
     govde.className = 'oyun-govde a' + adim;
-    geri.hidden = adim === 0 || adim > SON;
+    geri.style.visibility = adim === 0 || adim > SON ? 'hidden' : ''; atla.hidden = adim > SON;   // Geri yerini korur, ortadaki düğme kaymaz
     ileri.textContent = adim === SON ? L.bitir : adim > SON ? L.don : L.ileri;
     ileri.disabled = adim <= SON && !durum.tamam.has(adim);
     [tahmin, dinleOku, kelime, izle, anla, final][adim]();
@@ -250,7 +254,7 @@
     govde.insertAdjacentHTML('beforeend', `<div class="kitap-acik"><div class="ka-sol"><img alt=""></div><div class="ka-sag"><p class="okuma" lang="${L.lang}"></p><span class="ka-no"></span></div></div>
       <div class="sayfa-gez"><button class="sg-geri" type="button" aria-label="${L.onceki}">‹</button><button class="dinle-btn do-btn" type="button"></button><ol class="sg-nokta">${S.map((_, i) => `<li><button type="button" data-s="${i}" aria-label="${L.sayfa(i + 1, S.length)}"></button></li>`).join('')}</ol><button class="sg-ileri btn btn-sm" type="button">${L.cevir} ›</button></div><p class="geri-bildirim" role="status"></p>`);
     // sayfa düğmeleri Geri/İleri satırına taşınır, geri bildirim sayfanın içine: kitap tüm yüksekliği alır
-    const gez = $('.sayfa-gez', govde); $('.ka-sag', govde).appendChild($('.geri-bildirim', govde)); geri.after(gez);
+    const gez = $('.sayfa-gez', govde); $('.ka-sag', govde).appendChild($('.geri-bildirim', govde)); $('.alt-orta', dlg).prepend(gez);
     const ka = $('.kitap-acik', govde), img = $('.ka-sol img', govde), p = $('.okuma', govde), btn = $('.do-btn', gez), fb = $('.geri-bildirim', govde);
     let kelimeler = [];
     const dugme = () => { btn.innerHTML = calan ? `<span aria-hidden="true">❚❚</span> ${L.durdur}` : `<span aria-hidden="true">▶</span> ${L.dinleBtn}`; btn.classList.toggle('caliyor', calan); btn.setAttribute('aria-pressed', calan); };
