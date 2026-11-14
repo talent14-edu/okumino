@@ -122,10 +122,8 @@
         ['p6', 'Ertesi sabah Gepetto ceketini satıp Pinokyo’ya bir alfabe kitabı aldı. Pinokyo kitabını sıkıca tuttu. “Bugün okula gideceğim, çok şey öğreneceğim!” dedi ve yola düştü.']
       ],
       izle: {
-        webp: 'izle.webp', mp4: 'izle.mp4', poster: 'izle_poster.webp',
-        alt: [[0.6, 7.2, 'Kiraz Usta’nın atölyesindeki odun… konuşuyordu!'], [8.1, 14.7, 'Gepetto oydu, yonttu… ve kuklanın gözleri açıldı.'],
-          [15.6, 22.2, 'Pinokyo ilk adımını attı. Sonra bir tane daha…'], [23.1, 29.4, 'Ve kapıdan fırlayıp sokağa kaçtı!'],
-          [30.4, 36.6, 'Çekirge: “Söz dinleyen çocuk yolunu kaybetmez.”'], [37.6, 44.2, 'Pinokyo alfabe kitabıyla okul yoluna düştü.']]
+        webp: 'izle.webp', mp4: 'izle.mp4?v=vo1', poster: 'izle_poster.webp',
+        alt: [[0.6, 7.6, 'Kiraz Usta’nın atölyesinde sıradan bir odun parçası vardı. Ama bu odun… konuşuyordu!'], [8.1, 14.4, 'Odunu dostu Gepetto aldı. Oydu, yonttu… ve kuklanın gözleri açıldı.'], [15.6, 21.6, 'Adını Pinokyo koydu. Pinokyo ilk adımını attı. Sonra bir tane daha…'], [23.1, 27.8, 'Pinokyo daha yürümeyi yeni öğrenmişti ki kapıdan fırlayıp sokağa kaçtı!'], [30.3, 36.5, 'O akşam küçük çekirge ona bir öğüt verdi: “Söz dinleyen çocuk yolunu kaybetmez.”'], [37.5, 43.6, 'Gepetto ceketini satıp ona bir alfabe kitabı aldı. Ve Pinokyo okul yoluna düştü.']]
       }
     }
   };
