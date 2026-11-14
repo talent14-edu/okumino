@@ -73,7 +73,7 @@
       <span class="kutu"><span class="yuz arka"></span><span class="yuz ust"></span>
         <span class="yuz on"><img src="${cover(b)}" alt="" loading="lazy"></span>
         <span class="yuz sirt"><i>✦</i><b>${b.title}</b>${k > .8 ? `<small>${b.author}</small>` : ''}</span></span>
-      <span class="ac-ipucu">Aç ve keşfet ✦</span></button>`;
+      </button>`;
   }
 
   /* hero rafı */
