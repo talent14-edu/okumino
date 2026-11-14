@@ -181,7 +181,7 @@
     gorsel.className = 'oyun-gorsel ' + (!sahne || adim === 0 ? 'kapak-modu' : 'sahne-modu');
   }
   function ciz() {
-    sustur();
+    sustur(); dlg.querySelectorAll('.oyun-alt .sayfa-gez').forEach(e => e.remove());
     ilerlemeCiz(); gorselCiz();
     govde.className = 'oyun-govde a' + adim;
     geri.hidden = adim === 0 || adim > SON;
@@ -223,7 +223,9 @@
     const S = sayfalar(); durum.okunan = durum.okunan || new Set();
     govde.insertAdjacentHTML('beforeend', `<div class="kitap-acik"><div class="ka-sol"><img alt=""></div><div class="ka-sag"><p class="okuma" lang="${L.lang}"></p><span class="ka-no"></span></div></div>
       <div class="sayfa-gez"><button class="sg-geri" type="button" aria-label="${L.onceki}">‹</button><button class="dinle-btn do-btn" type="button"></button><ol class="sg-nokta">${S.map((_, i) => `<li><button type="button" data-s="${i}" aria-label="${L.sayfa(i + 1, S.length)}"></button></li>`).join('')}</ol><button class="sg-ileri btn btn-sm" type="button">${L.cevir} ›</button></div><p class="geri-bildirim" role="status"></p>`);
-    const ka = $('.kitap-acik', govde), img = $('.ka-sol img', govde), p = $('.okuma', govde), btn = $('.do-btn', govde), fb = $('.geri-bildirim', govde);
+    // sayfa düğmeleri Geri/İleri satırına taşınır, geri bildirim sayfanın içine: kitap tüm yüksekliği alır
+    const gez = $('.sayfa-gez', govde); $('.ka-sag', govde).appendChild($('.geri-bildirim', govde)); geri.after(gez);
+    const ka = $('.kitap-acik', govde), img = $('.ka-sol img', govde), p = $('.okuma', govde), btn = $('.do-btn', gez), fb = $('.geri-bildirim', govde);
     let kelimeler = [];
     const dugme = () => { btn.innerHTML = calan ? `<span aria-hidden="true">❚❚</span> ${L.durdur}` : `<span aria-hidden="true">▶</span> ${L.dinleBtn}`; btn.classList.toggle('caliyor', calan); btn.setAttribute('aria-pressed', calan); };
     const isaretle = i => kelimeler.forEach((w, k) => { w.classList.toggle('su', k === i); w.classList.toggle('gecti', k < i); });
@@ -234,8 +236,8 @@
       p.innerHTML = cumleler(S[s].metin).map(c => `<span class="cm">${c.trim().split(' ').map(w => `<span class="w" data-i="${n++}">${esc(w)}</span>`).join(' ')}</span>`).join(' ');
       kelimeler = [...p.querySelectorAll('.w')];
       $('.ka-no', govde).textContent = L.sayfa(s + 1, S.length);
-      govde.querySelectorAll('.sg-nokta button').forEach((b, i) => { b.classList.toggle('su', i === s); b.classList.toggle('okundu', durum.okunan.has(i)); b.setAttribute('aria-current', i === s ? 'page' : 'false'); });
-      $('.sg-geri', govde).disabled = s === 0; $('.sg-ileri', govde).hidden = s === S.length - 1;
+      gez.querySelectorAll('.sg-nokta button').forEach((b, i) => { b.classList.toggle('su', i === s); b.classList.toggle('okundu', durum.okunan.has(i)); b.setAttribute('aria-current', i === s ? 'page' : 'false'); });
+      $('.sg-geri', gez).disabled = s === 0; $('.sg-ileri', gez).hidden = s === S.length - 1;
       if (yon) { ka.classList.remove('cevir-ileri', 'cevir-geri'); void ka.offsetWidth; ka.classList.add(yon > 0 ? 'cevir-ileri' : 'cevir-geri'); }
       if (durum.okunan.size === S.length && !durum.tamam.has(1)) { fb.textContent = L.okuBitti; tamamla(1); }
       else if (!durum.tamam.has(1)) fb.textContent = s === S.length - 1 ? L.okuSon : '';
@@ -282,9 +284,9 @@
     });
     const sayfayaGit = (s, yon) => { sesA.pause(); window.speechSynthesis && speechSynthesis.cancel(); goster(s, yon); if (calan) sayfaCal(true); };
     p.addEventListener('click', e => { const c = e.target.closest('.cm'); if (!c || calan) return; p.querySelectorAll('.cm').forEach(x => x.classList.toggle('isik', x === c && !c.classList.contains('isik'))); });
-    $('.sg-geri', govde).addEventListener('click', () => durum.sayfa > 0 && sayfayaGit(durum.sayfa - 1, -1));
-    $('.sg-ileri', govde).addEventListener('click', () => durum.sayfa < S.length - 1 && sayfayaGit(durum.sayfa + 1, 1));
-    govde.querySelectorAll('.sg-nokta button').forEach(b => b.addEventListener('click', () => sayfayaGit(+b.dataset.s, +b.dataset.s - durum.sayfa)));
+    $('.sg-geri', gez).addEventListener('click', () => durum.sayfa > 0 && sayfayaGit(durum.sayfa - 1, -1));
+    $('.sg-ileri', gez).addEventListener('click', () => durum.sayfa < S.length - 1 && sayfayaGit(durum.sayfa + 1, 1));
+    gez.querySelectorAll('.sg-nokta button').forEach(b => b.addEventListener('click', () => sayfayaGit(+b.dataset.s, +b.dataset.s - durum.sayfa)));
     calan = false; dugme();
     goster(Math.min(durum.sayfa, S.length - 1));
   }
